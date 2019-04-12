@@ -1,19 +1,17 @@
 package ru.nobird.arch.generator.settings
 
 import com.intellij.ide.fileTemplates.*
-import com.intellij.ide.util.PackageChooserDialog
-import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
-import com.intellij.openapi.fileChooser.FileChooserDialog
 import com.intellij.openapi.fileTypes.FileTypeManager
-import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.TextBrowseFolderListener
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.util.io.FileUtil
-import com.intellij.psi.PsiDirectory
+import com.intellij.openapi.vfs.VirtualFile
 import ru.nobird.arch.generator.component.GeneratorProjectComponent
+import ru.nobird.arch.generator.data.Layer
 import java.io.InputStreamReader
 import javax.swing.*
 import javax.swing.event.DocumentEvent
@@ -27,17 +25,15 @@ class GeneratorSettings(
         private const val KOTLIN_TEMPLATE_EXT = "kt"
     }
 
-    private lateinit var rootPathField: JTextField
-    private lateinit var rootPathLabel: JLabel
-    private lateinit var cachePathField: JTextField
+    private lateinit var cachePathField: TextFieldWithBrowseButton
     private lateinit var cachePathLabel: JLabel
-    private lateinit var remotePathField: JTextField
+    private lateinit var remotePathField: TextFieldWithBrowseButton
     private lateinit var remotePathLabel: JLabel
-    private lateinit var dataPathField: JTextField
-    private lateinit var domainPathField: JTextField
-    private lateinit var presentationPathField: JTextField
-    private lateinit var viewPathField: JTextField
-    private lateinit var injectionPathField: JTextField
+    private lateinit var dataPathField: TextFieldWithBrowseButton
+    private lateinit var domainPathField: TextFieldWithBrowseButton
+    private lateinit var presentationPathField: TextFieldWithBrowseButton
+    private lateinit var viewPathField: TextFieldWithBrowseButton
+    private lateinit var injectionPathField: TextFieldWithBrowseButton
     private lateinit var dataPathLabel: JLabel
     private lateinit var domainPathLabel: JLabel
     private lateinit var presentationPathLabel: JLabel
@@ -46,13 +42,6 @@ class GeneratorSettings(
     private lateinit var rootPanel: JPanel
 
     private lateinit var rootPathButton: JButton
-    private lateinit var cachePathButton: JButton
-    private lateinit var remotePathButton: JButton
-    private lateinit var dataPathButton: JButton
-    private lateinit var domainPathButton: JButton
-    private lateinit var presentationPathButton: JButton
-    private lateinit var viewPathButton: JButton
-    private lateinit var injectionPathButton: JButton
 
     private var isModified = false
 
@@ -61,38 +50,51 @@ class GeneratorSettings(
 
     private val config = GeneratorProjectComponent.getInstance(project)
 
-    override fun createComponent(): JComponent? {
-        rootPathField.document.addDocumentListener(this)
-        cachePathField.document.addDocumentListener(this)
-        remotePathField.document.addDocumentListener(this)
-        dataPathField.document.addDocumentListener(this)
-        domainPathField.document.addDocumentListener(this)
-        presentationPathField.document.addDocumentListener(this)
-        viewPathField.document.addDocumentListener(this)
-        injectionPathField.document.addDocumentListener(this)
+    private lateinit var fields: Map<Layer, TextFieldWithBrowseButton>
 
-        TextFieldWithBrowseButton(rootPathField) {
-            val fileChooserDescriptor = FileChooserDescriptor(false, true, false, false, false, false)
-            FileChooser.chooseFile(fileChooserDescriptor, project, null) {
-                rootPathField.text = it.canonicalPath
-            }
+    override fun createComponent(): JComponent? {
+        fields = mapOf(
+            Layer.CACHE to cachePathField,
+            Layer.REMOTE to remotePathField,
+            Layer.DATA to dataPathField,
+            Layer.DOMAIN to domainPathField,
+            Layer.PRESENTATION to presentationPathField,
+            Layer.VIEW to viewPathField,
+            Layer.INJECTION to injectionPathField
+        )
+
+        val fileChooserDescriptor = FileChooserDescriptor(false, true, false, false, false, false)
+        fields.forEach { layer, field ->
+            config.paths[layer]?.let(field::setText)
+
+            field.textField.document.addDocumentListener(this)
+            field.isEditable = false
+            field.addBrowseFolderListener(TextBrowseFolderListener(fileChooserDescriptor, project))
         }
 
         rootPathButton.addActionListener {
-            val dialog = PackageChooserDialog("Choose root package", project)
-            val isOk = dialog.showAndGet()
+            FileChooser.chooseFile(fileChooserDescriptor, project, null) { dir ->
+                fillRootField(dir.children, Layer.values())
+            }
+        }
 
+//        rootPanel.add(textField)
 
-            if (isOk) {
-                val pckg = dialog.selectedPackage
-
-                val (mainDir, absolutePath) = pckg.directories
-                    .map { it to getFullName(it) }
-                    .find { it.second.contains("main") }!!
-
-                rootPathField.text = absolutePath.joinToString(separator = "/")
-
-                val template = getTemplate(KOTLIN_TEMPLATE, KOTLIN_TEMPLATE_EXT)
+//        rootPathButton.addActionListener {
+//            val dialog = PackageChooserDialog("Choose root package", project)
+//            val isOk = dialog.showAndGet()
+//
+//
+//            if (isOk) {
+//                val pckg = dialog.selectedPackage
+//
+//                val (mainDir, absolutePath) = pckg.directories
+//                    .map { it to getFullName(it) }
+//                    .find { it.second.contains("main") }!!
+//
+//                rootPathField.text = absolutePath.joinToString(separator = "/")
+//
+//                val template = getTemplate(KOTLIN_TEMPLATE, KOTLIN_TEMPLATE_EXT)
 
 //                val file = FileTemplateUtil.createFromTemplate(template, "test1.kt", FileTemplateManager.getInstance().defaultProperties, mainDir)
 
@@ -106,26 +108,35 @@ class GeneratorSettings(
 //
 //                    FileTemplateUtil.createFromTemplate(template, "test2.kt", props, mainDir)
 //                }
-            }
+//            }
 //            JFileChooser()
 //                .showOpenDialog(rootPanel)
-        }
+//        }
 
         return rootPanel
     }
 
-    private fun getFullName(pckg: PsiDirectory?): Sequence<String> =
-        pckg
-            ?.let {
-                getFullName(it.parentDirectory) + it.name
+    private fun fillRootField(children: Array<VirtualFile>, layers: Array<Layer>) {
+        layers.forEach  { layer ->
+            children.forEach loop@ { child ->
+                if (child.name == layer.packageName) {
+                    fields[layer]?.text = child.canonicalPath ?: ""
+                    child.children?.let {
+                        fillRootField(it, layer.children)
+                    }
+                    return@loop
+                }
             }
-            ?: emptySequence()
+        }
+    }
 
     override fun isModified(): Boolean =
         isModified
 
     override fun apply() {
-        config.rootPackagePath = rootPathField.text.takeIf(String::isNotBlank)
+        fields.forEach { layer, field ->
+            config.paths[layer] = field.text.takeIf(String::isNotBlank)
+        }
         isModified = false
     }
 

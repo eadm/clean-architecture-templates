@@ -4,9 +4,9 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.*
 import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiPackage
 import com.intellij.util.xmlb.XmlSerializerUtil
 import com.intellij.util.xmlb.annotations.Attribute
+import ru.nobird.arch.generator.data.Layer
 import ru.nobird.arch.generator.migration.MigrationManager
 import java.io.Serializable
 
@@ -34,7 +34,7 @@ class GeneratorProjectComponent(
     private lateinit var version: String
 
     @Attribute
-    internal var rootPackagePath: String? = null
+    internal var paths: MutableMap<Layer, String?> = hashMapOf()
 
     override fun initComponent() {
         super.initComponent()
