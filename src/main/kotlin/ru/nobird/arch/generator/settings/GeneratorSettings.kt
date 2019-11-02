@@ -46,7 +46,7 @@ class GeneratorSettings(
     private var isModified = false
 
     override fun getDisplayName(): String =
-        "Base Generator Settings"
+        "CLEAN Generator Settings"
 
     private val config = GeneratorProjectComponent.getInstance(project)
 
@@ -64,7 +64,7 @@ class GeneratorSettings(
         )
 
         val fileChooserDescriptor = FileChooserDescriptor(false, true, false, false, false, false)
-        fields.forEach { layer, field ->
+        fields.forEach { (layer, field) ->
             config.paths[layer]?.let(field::setText)
 
             field.textField.document.addDocumentListener(this)
@@ -77,41 +77,6 @@ class GeneratorSettings(
                 fillRootField(dir.children, Layer.values())
             }
         }
-
-//        rootPanel.add(textField)
-
-//        rootPathButton.addActionListener {
-//            val dialog = PackageChooserDialog("Choose root package", project)
-//            val isOk = dialog.showAndGet()
-//
-//
-//            if (isOk) {
-//                val pckg = dialog.selectedPackage
-//
-//                val (mainDir, absolutePath) = pckg.directories
-//                    .map { it to getFullName(it) }
-//                    .find { it.second.contains("main") }!!
-//
-//                rootPathField.text = absolutePath.joinToString(separator = "/")
-//
-//                val template = getTemplate(KOTLIN_TEMPLATE, KOTLIN_TEMPLATE_EXT)
-
-//                val file = FileTemplateUtil.createFromTemplate(template, "test1.kt", FileTemplateManager.getInstance().defaultProperties, mainDir)
-
-//                val file1 = PsiFileFactory.getInstance(project).createFileFromText("test1.kt", Language.findLanguageByID("kotlin")!!, "")
-
-//                WriteCommandAction.runWriteCommandAction(project) {
-////                    mainDir.add(file1)
-//                    val props = FileTemplateManager.getInstance(project)
-//                        .defaultProperties
-//                    props.setProperty("NAME", "test2")
-//
-//                    FileTemplateUtil.createFromTemplate(template, "test2.kt", props, mainDir)
-//                }
-//            }
-//            JFileChooser()
-//                .showOpenDialog(rootPanel)
-//        }
 
         return rootPanel
     }
@@ -134,7 +99,7 @@ class GeneratorSettings(
         isModified
 
     override fun apply() {
-        fields.forEach { layer, field ->
+        fields.forEach { (layer, field) ->
             config.paths[layer] = field.text.takeIf(String::isNotBlank)
         }
         isModified = false
