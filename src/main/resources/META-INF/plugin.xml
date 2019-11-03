@@ -13,21 +13,20 @@
     <depends>com.intellij.modules.lang</depends>
     -->
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-    </extensions>
-
     <actions>
         <!-- Add your action here -->
-        <group id="MyPlugin.TopMenu"
-               text="_MyPlugin"
-               description="MyPlugin Toolbar Menu">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <action id="MyAction"
-                    class="ru.nobird.arch.generator.action.SampleAction"
-                    text="_MyAction"
-                    description="MyAction"/>
-        </group>
+        <action id="NewFeatureAction"
+                class="ru.nobird.arch.generator.action.NewFeatureAction1"
+                text="New CLEAN feature"
+                description="Create new CLEAN feature">
+            <add-to-group group-id="NewElementInMenuGroup" anchor="last" />
+        </action>
+        <action id="ru.nobird.arch.generator.NewFeatureAction"
+                class="ru.nobird.arch.generator.action.NewFeatureAction"
+                text="Clean Feature"
+                description="Creates new CLEAN feature">
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="Kotlin.NewFile" />
+        </action>
     </actions>
     <project-components>
         <component>
