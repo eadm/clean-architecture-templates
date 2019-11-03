@@ -6,6 +6,7 @@ import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.dao.${daoName}
 <#if isCreateEntityMapper!false>
 import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.mapper.${entityMapperName}
 </#if>
+import ${packageName}.data.${camelCaseToUnderscore(featureName)}.source.${dataSourceName}
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
