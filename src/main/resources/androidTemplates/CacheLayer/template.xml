@@ -32,6 +32,43 @@
         suggest="${featureName}" />
 
     <parameter
+        id="idType"
+        name="Id type of item"
+        type="string"
+        constraints="class|nonempty"
+        default="Long" />
+
+    <parameter
+        id="isCreateDataSource"
+        name="Create cache data source impl?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="dataSourceName"
+        name="Cache data source interface name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleCacheDataSource"
+        suggest="${featureName}CacheDataSource"
+        visibility="isCreateDataSource!false" />
+
+    <parameter
+        id="isCreateDao"
+        name="Create dao interface?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="daoName"
+        name="Dao name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleDao"
+        suggest="${featureName}Dao"
+        visibility="isCreateDao!false" />
+
+    <parameter
         id="isCreateEntity"
         name="Create entity?"
         type="boolean"

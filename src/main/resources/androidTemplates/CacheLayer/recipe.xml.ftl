@@ -1,9 +1,17 @@
 <?xml version="1.0"?>
 <recipe>
 
-    <instantiate
-            from="root/src/app_package/cache/feature_package/CacheDataSourceImpl.kt.ftl"
-            to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/${featureName}CacheDataSourceImpl.kt" />
+    <#if isCreateDataSource!false>
+        <instantiate
+                from="root/src/app_package/cache/feature_package/CacheDataSourceImpl.kt.ftl"
+                to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/${dataSourceName}Impl.kt" />
+    </#if>
+
+    <#if isCreateDao!false>
+        <instantiate
+                from="root/src/app_package/cache/feature_package/dao/Dao.kt.ftl"
+                to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/dao/${daoName}.kt" />
+    </#if>
 
     <#if isCreateEntity!false>
         <instantiate

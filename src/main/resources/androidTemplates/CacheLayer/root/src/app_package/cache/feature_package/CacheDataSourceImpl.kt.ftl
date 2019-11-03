@@ -1,14 +1,43 @@
 package ${packageName}.cache.${camelCaseToUnderscore(featureName)}
 
+<#if isCreateDao!false>
+import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.dao.${daoName}
+</#if>
+<#if isCreateEntityMapper!false>
 import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.mapper.${entityMapperName}
-import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.model.${entityName}
+</#if>
+import io.reactivex.Completable
+import io.reactivex.Single
 import javax.inject.Inject
 
-class ${featureName}CacheDataSourceImpl
+class ${dataSourceName}Impl
 @Inject
 constructor(
-    private val ${featureName?uncap_first}Dao: ${featureName}Dao,
+<#if isCreateDao!false>
+    private val ${daoName?uncap_first}: ${daoName},
+</#if>
+<#if isCreateEntityMapper!false>
     private val ${entityMapperName?uncap_first}: ${entityMapperName}
-) {
+</#if>
+) : ${dataSourceName} {
+    override fun get${itemName}s(vararg ids: ${idType}): Single<List<${itemName}>> =
+        <#if isCreateDao!false>
+        ${featureName?uncap_first}Dao
+            .get${itemName}s(*ids)
+        </#if>
+        <#if isCreateEntityMapper == true>
+            .map { it.map(${entityMapperName?uncap_first}::mapFromEntity) }
+        </#if>
 
+    override fun save${itemName}s(items: List<${itemName}>): Completable =
+    <#if isCreateEntityMapper!false>
+        Single
+            .fromCallable { items.map(${entityMapperName?uncap_first}::mapToEntity) }
+    <#else>
+        Single
+            .just(items)
+    </#if>
+    <#if isCreateDao!false>
+            .flatMapCompletable(${daoName?uncap_first}::save${itemName})
+    </#if>
 }
