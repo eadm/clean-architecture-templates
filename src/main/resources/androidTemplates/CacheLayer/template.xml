@@ -12,16 +12,15 @@
 
     <parameter
         id="packageName"
-        name="Package name"
+        name="Root package"
         type="string"
         constraints="package"
-        default="com.mycompany.myapp" />
+        default="" />
 
     <parameter
         id="featureName"
         name="Feature name"
         type="string"
-        constraints="package"
         default="SampleFeature" />
 
     <parameter
@@ -34,7 +33,7 @@
 
     <parameter
         id="isCreateEntity"
-        name="True if need to create entity"
+        name="Create entity?"
         type="boolean"
         default="false" />
 
@@ -47,9 +46,25 @@
         suggest="${itemName}Entity"
         visibility="isCreateEntity!false" />
 
-    <thumbs>
-        <thumb>template_droidcon.png</thumb>
-    </thumbs>
+    <parameter
+        id="isCreateEntityMapper"
+        name="Create entity mapper?"
+        type="boolean"
+        visibility="isCreateEntity!false"
+        default="false" />
+
+    <parameter
+        id="entityMapperName"
+        name="Entity mapper name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureEntityMapper"
+        suggest="${entityName}Mapper"
+        visibility="isCreateEntityMapper!false" />
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
 
     <globals file="globals.xml.ftl" />
     <execute file="recipe.xml.ftl" />

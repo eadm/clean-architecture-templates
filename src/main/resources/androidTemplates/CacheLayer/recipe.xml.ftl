@@ -2,8 +2,20 @@
 <recipe>
 
     <instantiate
-            from="root/src/app_package/cache/feature_package/CacheDataSource.kt.ftl"
-            to="${escapeXmlAttribute(srcOut)}/cache/${featureName?camelCaseToUnderscore}/${feautureName}CacheDataSource.kt" />
+            from="root/src/app_package/cache/feature_package/CacheDataSourceImpl.kt.ftl"
+            to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/${featureName}CacheDataSourceImpl.kt" />
+
+    <#if isCreateEntity!false>
+        <instantiate
+                from="root/src/app_package/cache/feature_package/model/Entity.kt.ftl"
+                to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/model/${entityName}.kt" />
+    </#if>
+
+    <#if isCreateEntityMapper!false>
+        <instantiate
+                from="root/src/app_package/cache/feature_package/mapper/EntityMapper.kt.ftl"
+                to="${escapeXmlAttribute(srcOut)}/cache/${camelCaseToUnderscore(featureName)}/mapper/${entityMapperName}.kt" />
+    </#if>
 
 <#--    <instantiate from="root/src/app_package/di/DaggerModule.kt.ftl"-->
 <#--                to="${escapeXmlAttribute(srcOut)}/di/${name}Module.kt" />-->
