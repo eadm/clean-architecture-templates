@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Feature Cache Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Cache layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        constraints="package"
+        default="SampleFeature" />
+
+    <parameter
+        id="itemName"
+        name="Item name (if not equal to feature name)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeature"
+        suggest="${featureName}" />
+
+    <parameter
+        id="isCreateEntity"
+        name="True if need to create entity"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="entityName"
+        name="Entity name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureEntity"
+        suggest="${itemName}Entity"
+        visibility="isCreateEntity!false" />
+
+    <thumbs>
+        <thumb>template_droidcon.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

@@ -15,12 +15,6 @@
 
     <actions>
         <!-- Add your action here -->
-        <action id="NewFeatureAction"
-                class="ru.nobird.arch.generator.action.NewFeatureAction1"
-                text="New CLEAN feature"
-                description="Create new CLEAN feature">
-            <add-to-group group-id="NewElementInMenuGroup" anchor="last" />
-        </action>
         <action id="ru.nobird.arch.generator.NewFeatureAction"
                 class="ru.nobird.arch.generator.action.NewFeatureAction"
                 text="Clean Feature"
