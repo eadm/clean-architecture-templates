@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Feature Injection Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Injection layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Root package"
+        type="string"
+        constraints="package"
+        default="" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        default="SampleFeature" />
+
+    <parameter
+        id="isCreateComponent"
+        name="Create component?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="componentName"
+        name="Component name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleComponent"
+        suggest="${featureName}Component"
+        visibility="isCreateComponent!false" />
+
+
+
+    <parameter
+        id="isCreateModule"
+        name="Create module?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="moduleName"
+        name="Module name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleModule"
+        suggest="${featureName}Module"
+        visibility="isCreateModule!false" />
+
+    <parameter
+        id="presenterName"
+        name="Presenter name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SamplePresenter"
+        suggest="${featureName}Presenter"
+        visibility="isCreateModule!false" />
+
+
+
+    <parameter
+        id="isCreateDataModule"
+        name="Create data module?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="dataModuleName"
+        name="Data module name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleDataModule"
+        suggest="${featureName}DataModule"
+        visibility="isCreateDataModule!false" />
+
+    <parameter
+        id="repositoryName"
+        name="Repository interface name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleRepository"
+        suggest="${featureName}Repository"
+        visibility="isCreateDataModule!false" />
+
+    <parameter
+        id="hasCacheDataSource"
+        name="Has cache layer?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="cacheDataSourceName"
+        name="CacheDataSource name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleCacheDataSource"
+        suggest="${featureName}CacheDataSource"
+        visibility="hasCacheDataSource!false" />
+
+    <parameter
+        id="hasDao"
+        name="Has Dao?"
+        type="boolean"
+        visibility="hasCacheDataSource!false"
+        default="false" />
+
+    <parameter
+        id="daoName"
+        name="Dao name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleDao"
+        suggest="${featureName}Dao"
+        visibility="hasDao!false" />
+
+
+    <parameter
+        id="hasRemoteDataSource"
+        name="Has remote layer?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="remoteDataSourceName"
+        name="RemoteDataSource name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleRemoteDataSource"
+        suggest="${featureName}RemoteDataSource"
+        visibility="hasRemoteDataSource!false" />
+
+    <parameter
+        id="hasService"
+        name="Has Retrofit Service?"
+        type="boolean"
+        visibility="hasRemoteDataSource!false"
+        default="false" />
+
+    <parameter
+        id="serviceName"
+        name="Service name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleService"
+        suggest="${featureName}Service"
+        visibility="hasService!false" />
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>
