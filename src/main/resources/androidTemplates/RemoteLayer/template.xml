@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Feature Remote Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Remote layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Root package"
+        type="string"
+        constraints="package"
+        default="" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        default="SampleFeature" />
+
+    <parameter
+        id="itemName"
+        name="Item name (if not equal to feature name)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeature"
+        suggest="${featureName}" />
+
+    <parameter
+        id="itemPackage"
+        name="Package of item"
+        type="string"
+        constraints="package"
+        suggest="${packageName}.domain.model" />
+
+    <parameter
+        id="idType"
+        name="Id type of item"
+        type="string"
+        constraints="class|nonempty"
+        default="Long" />
+
+    <parameter
+        id="isSingleItemOperation"
+        name="Only single item operations supported?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="isCreateDataSource"
+        name="Create remote data source impl?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="dataSourceName"
+        name="Remote data source interface name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleRemoteDataSource"
+        suggest="${featureName}RemoteDataSource"
+        visibility="isCreateDataSource!false" />
+
+    <parameter
+        id="isCreateService"
+        name="Create service interface?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="serviceName"
+        name="Service name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleService"
+        suggest="${featureName}Service"
+        visibility="isCreateService!false" />
+
+    <parameter
+        id="isCreateResponse"
+        name="Create response?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="responseName"
+        name="Response name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureResponse"
+        suggest="${itemName}Response"
+        visibility="isCreateResponse!false" />
+
+    <parameter
+        id="isCreateResponseMapper"
+        name="Create response mapper?"
+        type="boolean"
+        visibility="isCreateResponse!false"
+        default="false" />
+
+    <parameter
+        id="responseMapperName"
+        name="Response mapper name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureResponseMapper"
+        suggest="${responseName}Mapper"
+        visibility="isCreateResponseMapper!false" />
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

@@ -24,7 +24,7 @@ constructor(
 ) : ${dataSourceName} {
     <@getter itemName=itemName idType=idType isSingleItem=isSingleItemOperation isOverride=true /> =
         <#if isCreateDao!false>
-        ${featureName?uncap_first}Dao
+        ${daoName?uncap_first}
             .get${itemName}s(<#if isSingleItemOperation!false>id<#else>*ids</#if>)
         <#else>
         TODO()
