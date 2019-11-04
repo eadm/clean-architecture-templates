@@ -15,7 +15,7 @@ import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewN
 </#if>
 import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
-import kotlinx.android.synthetic.main.${layoutName}.*
+import kotlinx.android.synthetic.main.${fragmentLayoutName}.*
 import javax.inject.Inject
 
 class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
@@ -49,7 +49,7 @@ class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.${layoutName}, container, false)
+        inflater.inflate(R.layout.${fragmentLayoutName}, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         <#if isMvp!false>

@@ -13,7 +13,7 @@ import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewN
 </#if>
 import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
-import kotlinx.android.synthetic.main.${layoutName}.*
+import kotlinx.android.synthetic.main.${activityLayoutName}.*
 import javax.inject.Inject
 
 class ${activityName} : AppCompatActivity()<#if isMvp!false>, ${viewName}</#if> {
@@ -37,7 +37,7 @@ class ${activityName} : AppCompatActivity()<#if isMvp!false>, ${viewName}</#if> 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.${layoutName})
+        setContentView(R.layout.${activityLayoutName})
 
         <#if isHasComponent!false>
         injectComponent()

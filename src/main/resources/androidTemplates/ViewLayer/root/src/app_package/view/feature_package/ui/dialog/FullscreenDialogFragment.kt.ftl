@@ -17,7 +17,7 @@ import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewN
 </#if>
 import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
-import kotlinx.android.synthetic.main.${layoutName}.*
+import kotlinx.android.synthetic.main.${dialogLayoutName}.*
 import javax.inject.Inject
 
 class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
@@ -59,7 +59,7 @@ class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#i
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.${layoutName}, container, false)
+        inflater.inflate(R.layout.${dialogLayoutName}, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         <#if isMvp!false>

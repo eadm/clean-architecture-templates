@@ -137,6 +137,33 @@
         suggest="${featureName}FragmentDialog"
         visibility="viewType == 'fragmentDialog' || viewType == 'fullscreenFragmentDialog'" />
 
+    <parameter
+        id="activityLayoutName"
+        name="Activity layout name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="activity_sample"
+        suggest="activity_${camelCaseToUnderscore(featureName)}"
+        visibility="viewType == 'activity'" />
+
+    <parameter
+        id="fragmentLayoutName"
+        name="Fragment layout name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="fragment_sample"
+        suggest="fragment_${camelCaseToUnderscore(featureName)}"
+        visibility="viewType == 'fragment'" />
+
+    <parameter
+        id="fragmentDialogLayoutName"
+        name="DialogFragment layout name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="dialog_sample"
+        suggest="dialog_${camelCaseToUnderscore(featureName)}"
+        visibility="viewType == 'fragmentDialog' || viewType == 'fullscreenFragmentDialog'" />
+
 <!--    <thumbs>-->
 <!--        <thumb>template_droidcon.png</thumb>-->
 <!--    </thumbs>-->
