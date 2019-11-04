@@ -1,16 +1,21 @@
 package ${packageName}.view.${camelCaseToUnderscore(featureName)}.ui.dialog
 <#include "../../../../../../../../common/Common.kt.ftl" />
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.Fragment
 import ru.nobird.android.view.base.ui.extension.argument
 <#if isMvp!false>
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import ru.nobird.android.ui.viewstatedelegate.ViewStateDelegate
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${presenterName}
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewName}
 </#if>
+import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
 import kotlinx.android.synthetic.main.${layoutName}.*
 import javax.inject.Inject
@@ -32,7 +37,7 @@ class ${fragmentName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
 <#if isMvp!false>
     private lateinit var viewStateDelegate: ViewStateDelegate<${viewName}.State>
 </#if>
-    
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

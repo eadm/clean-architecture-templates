@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import ru.nobird.android.ui.viewstatedelegate.ViewStateDelegate
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${presenterName}
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewName}
 </#if>
+import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
 import kotlinx.android.synthetic.main.${layoutName}.*
 import javax.inject.Inject
