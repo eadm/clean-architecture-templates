@@ -32,11 +32,24 @@
         suggest="${featureName}" />
 
     <parameter
+        id="itemPackage"
+        name="Package of item"
+        type="string"
+        constraints="package"
+        suggest="${packageName}.domain.model" />
+
+    <parameter
         id="idType"
         name="Id type of item"
         type="string"
         constraints="class|nonempty"
         default="Long" />
+
+    <parameter
+        id="isSingleItemOperation"
+        name="Only single item operations supported?"
+        type="boolean"
+        default="false" />
 
     <parameter
         id="isCreateDataSource"

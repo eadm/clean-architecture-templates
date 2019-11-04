@@ -1,11 +1,12 @@
 package ${packageName}.cache.${camelCaseToUnderscore(featureName)}.dao
-
+<#include "../../../../../../../common/Common.kt.ftl">
 <#if isCreateEntity!false>
 import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.model.${entityName}
+<#else>
+import ${itemPackage}.${itemName}
 </#if>
 import io.reactivex.Completable
 import io.reactivex.Single
-import javax.inject.Inject
 
 interface ${daoName} {
 <#if isCreateEntity!false>
@@ -13,8 +14,8 @@ interface ${daoName} {
 
     fun save${itemName}s(items: List<${entityName}>): Completable
 <#else>
-    fun get${itemName}s(vararg ids: ${idType}): Single<List<${itemName}>>
+    <@getter itemName=itemName idType=idType isSingleItem=isSingleItemOperation />
 
-    fun save${itemName}s(items: List<${itemName}>): Completable
+    <@setter itemName=itemName isSingleItem=isSingleItemOperation />
 </#if>
 }

@@ -1,6 +1,7 @@
 package ${packageName}.cache.${camelCaseToUnderscore(featureName)}.mapper
 
 import ${packageName}.cache.${camelCaseToUnderscore(featureName)}.model.${entityName}
+import ${itemPackage}.${itemName}
 import javax.inject.Inject
 
 class ${entityMapperName}
