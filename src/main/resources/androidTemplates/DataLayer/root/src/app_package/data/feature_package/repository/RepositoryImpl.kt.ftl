@@ -1,5 +1,6 @@
 package ${packageName}.data.${camelCaseToUnderscore(featureName)}.repository
 <#include "../../../../../../../common/Common.kt.ftl">
+import ${itemPackage}.${itemName}
 <#if isCreateCacheDataSource!false>
 import ${packageName}.data.${camelCaseToUnderscore(featureName)}.source.${cacheDataSourceName}
 </#if>
@@ -23,7 +24,7 @@ constructor(
     private val ${remoteDataSourceName?uncap_first}: ${remoteDataSourceName}
 </#if>
 ) : ${repositoryName} {
-    <@getter itemName=itemName idType=idType isOverride=true isSupportSourceType=true /> {
+    <@getter itemName=itemName idType=idType isOverride=true isSupportSourceType=true isSingleItem=isSingleItemOperation /> {
         <#if isCreateRemoteDataSource!false>
         val remoteSource = ${remoteDataSourceName?uncap_first}
             .get${itemName}s(*ids)
@@ -71,7 +72,7 @@ constructor(
     }
 
 <#if isCreateCacheDataSource!false && isExposeSaveOperation!false>
-    <@setter itemName=itemName isOverride=true /> =
+    <@setter itemName=itemName isOverride=true isSingleItem=isSingleItemOperation /> =
         ${cacheDataSourceName?uncap_first}
             .save${itemName}s(items)
 </#if>
