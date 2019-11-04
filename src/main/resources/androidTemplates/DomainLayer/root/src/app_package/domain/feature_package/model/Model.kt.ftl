@@ -1,5 +1,5 @@
 package ${itemPackage}
 
 class ${itemName}(
-    val id: ${idType]}
+    val id: ${idType}
 )

@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Feature Presentation Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Presentation layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Root package"
+        type="string"
+        constraints="package"
+        default="" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        default="SampleFeature" />
+
+    <parameter
+        id="itemName"
+        name="Item name (if not equal to feature name)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeature"
+        suggest="${featureName}" />
+
+    <parameter
+        id="itemPackage"
+        name="Package of item"
+        type="string"
+        constraints="package"
+        suggest="${packageName}.domain.model" />
+
+    <parameter
+        id="idType"
+        name="Id type of item"
+        type="string"
+        constraints="class|nonempty"
+        default="Long" />
+
+    <parameter
+        id="presenterName"
+        name="Presenter name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SamplePresenter"
+        suggest="${featureName}Presenter" />
+
+    <parameter
+        id="viewName"
+        name="View name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleView"
+        suggest="${featureName}View" />
+
+    <parameter
+        id="interactorName"
+        name="Interactor name (leave empty if not applicable)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default=""
+        suggest="${featureName}Interactor" />
+
+    <parameter
+        id="isCreateStateMapper"
+        name="Create state mapper?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="stateMapperName"
+        name="State mapper name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleStateMapper"
+        suggest="${featureName}StateMapper"
+        visibility="isCreateStateMapper!false" />
+
+    <parameter
+        id="isCreateListItem"
+        name="Create list item?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="listItemName"
+        name="List item name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleItem"
+        suggest="${featureName}Item"
+        visibility="isCreateListItem!false" />
+
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

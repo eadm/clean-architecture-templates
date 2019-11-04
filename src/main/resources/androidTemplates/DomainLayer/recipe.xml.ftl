@@ -2,7 +2,7 @@
 <recipe>
     <#if isCreateInteractor!false>
         <instantiate
-                from="root/src/app_package/domain/feature_package/source/Interactor.kt.ftl"
+                from="root/src/app_package/domain/feature_package/interactor/Interactor.kt.ftl"
                 to="${escapeXmlAttribute(srcOut)}/domain/${camelCaseToUnderscore(featureName)}/interactor/${interactorName}.kt" />
         <open file="${escapeXmlAttribute(srcOut)}/domain/${camelCaseToUnderscore(featureName)}/interactor/${interactorName}.kt" />
     </#if>

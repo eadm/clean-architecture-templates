@@ -7,7 +7,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface ${repositoryName} {
-    <@getter itemName=itemName idType=idType isSupportSourceType=true isSingleItem=isSingleItemOperation primarySourceType=DataSourceType.REMOTE />
+    <@getter itemName=itemName idType=idType isSupportSourceType=true isSingleItem=isSingleItemOperation primarySourceType="DataSourceType.REMOTE" />
 
 <#if isExposeSaveOperation!false>
     <@setter itemName=itemName isSingleItem=isSingleItemOperation />
