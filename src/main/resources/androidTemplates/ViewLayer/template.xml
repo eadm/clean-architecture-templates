@@ -46,71 +46,69 @@
         default="Long" />
 
     <parameter
-        id="isSingleItemOperation"
-        name="Only single item operations supported?"
-        type="boolean"
-        default="false" />
-
-    <parameter
-        id="isCreateDataSource"
-        name="Create remote data source impl?"
+        id="isMvp"
+        name="Has mvp?"
         type="boolean"
         default="true" />
 
     <parameter
-        id="dataSourceName"
-        name="Remote data source interface name"
+        id="presenterName"
+        name="Presenter name"
         type="string"
         constraints="class|nonempty|unique"
-        default="SampleRemoteDataSource"
-        suggest="${featureName}RemoteDataSource"
-        visibility="isCreateDataSource!false" />
+        default="SamplePresenter"
+        suggest="${featureName}Presenter"
+        visibility="isMvp!false" />
 
     <parameter
-        id="isCreateService"
-        name="Create service interface?"
+        id="viewName"
+        name="View name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleView"
+        suggest="${featureName}View"
+        visibility="isMvp!false" />
+
+    <parameter
+        id="isHasComponent"
+        name="Has component?"
         type="boolean"
         default="true" />
 
     <parameter
-        id="serviceName"
-        name="Service name"
+        id="componentName"
+        name="Component name"
         type="string"
         constraints="class|nonempty|unique"
-        default="SampleService"
-        suggest="${featureName}Service"
-        visibility="isCreateService!false" />
+        default="SampleComponent"
+        suggest="${featureName}Component"
+        visibility="isHasComponent!false" />
 
     <parameter
-        id="isCreateResponse"
-        name="Create response?"
+        id="isCreateList"
+        name="Create list?"
         type="boolean"
-        default="false" />
+        default="true" />
 
     <parameter
-        id="responseName"
-        name="Response name"
+        id="listItemName"
+        name="List item name"
         type="string"
         constraints="class|nonempty|unique"
-        default="SampleFeatureResponse"
-        suggest="${itemName}Response"
-        visibility="isCreateResponse!false" />
-
+        default="SampleItem"
+        suggest="${featureName}Item"
+        visibility="isCreateList!false" />
+    
     <parameter
-        id="isCreateResponseMapper"
-        name="Create response mapper?"
-        type="boolean"
-        visibility="isCreateResponse!false"
-        default="false" />
-
-    <parameter
-        id="responseMapperName"
-        name="Response mapper name"
-        type="string"
-        constraints="class|nonempty|unique"
-        default="SampleFeatureResponseMapper"
-        suggest="${responseName}Mapper"
-        visibility="isCreateResponseMapper!false" />
+        id="viewType"
+        name="View type"
+        type="enum"
+        default="fragment">
+        <option id="activity">Activity</option>
+        <option id="fragment">Fragment</option>
+        <option id="fragmentDialog">Fragment Dialog</option>
+        <option id="fullscreenFragmentDialog">Fullscreen Fragment Dialog</option>
+    </parameter>
 
 <!--    <thumbs>-->
 <!--        <thumb>template_droidcon.png</thumb>-->
