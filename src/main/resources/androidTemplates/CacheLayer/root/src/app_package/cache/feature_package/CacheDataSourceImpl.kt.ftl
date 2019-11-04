@@ -33,7 +33,7 @@ constructor(
             .map { it.map(${entityMapperName?uncap_first}::mapFromEntity) }
         </#if>
 
-    <@setter itemName=itemName isSingleItem=isSingleItemOperation /> =
+    <@setter itemName=itemName isSingleItem=isSingleItemOperation isOverride=true /> =
     <#if isCreateEntityMapper!false>
         Single
             .fromCallable { <#if isSingleItemOperation!false>${entityMapperName?uncap_first}.mapToEntity(item)<#else> items.map(${entityMapperName?uncap_first}::mapToEntity)</#if> }

@@ -9,7 +9,7 @@
 
     <#if isCreateService!false>
         <instantiate
-                from="root/src/app_package/remote/feature_package/dao/Service.kt.ftl"
+                from="root/src/app_package/remote/feature_package/service/Service.kt.ftl"
                 to="${escapeXmlAttribute(srcOut)}/remote/${camelCaseToUnderscore(featureName)}/service/${serviceName}.kt" />
         <open file="${escapeXmlAttribute(srcOut)}/remote/${camelCaseToUnderscore(featureName)}/service/${serviceName}.kt" />
     </#if>

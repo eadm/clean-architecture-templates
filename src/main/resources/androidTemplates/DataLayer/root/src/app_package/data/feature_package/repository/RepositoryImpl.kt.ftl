@@ -29,7 +29,7 @@ constructor(
         val remoteSource = ${remoteDataSourceName?uncap_first}
             .get${itemName}s(*ids)
             <#if isCreateRemoteDataSource!false>
-            .doCompletableOnSuccess(${cacheDataSourceName?uncap_first}::saveLessons)
+            .doCompletableOnSuccess(${cacheDataSourceName?uncap_first}::save${itemName}s)
             </#if>
         </#if>
 
@@ -71,7 +71,7 @@ constructor(
         }.map { ${itemName?uncap_first}s -> ${itemName?uncap_first}s.sortedBy { ids.indexOf(it.id) } }
     }
 
-<#if isCreateCacheDataSource!false && isExposeSaveOperation!false>
+<#if (isCreateCacheDataSource!false) && (isExposeSaveOperation!false)>
     <@setter itemName=itemName isOverride=true isSingleItem=isSingleItemOperation /> =
         ${cacheDataSourceName?uncap_first}
             .save${itemName}s(items)
