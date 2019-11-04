@@ -3,7 +3,7 @@
     <#if isCreateComponent!false>
         <instantiate
                 from="root/src/app_package/view/injection/feature_package/Component.kt.ftl"
-                to="${escapeXmlAttribute(srcOut)}/view/injection/${camelCaseToUnderscore(featureName)}/${componentName]}.kt" />
+                to="${escapeXmlAttribute(srcOut)}/view/injection/${camelCaseToUnderscore(featureName)}/${componentName}.kt" />
         <open file="${escapeXmlAttribute(srcOut)}/view/injection/${camelCaseToUnderscore(featureName)}/${componentName}.kt" />
     </#if>
 
