@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature View Layer"
+    name="View Layer"
     minApi="14"
     minBuildApi="14"
     description="View layer for feature">

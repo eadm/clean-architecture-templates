@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Injection Layer"
+    name="Injection Layer"
     minApi="14"
     minBuildApi="14"
     description="Injection layer for feature">

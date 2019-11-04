@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Cache Layer"
+    name="Cache Layer"
     minApi="14"
     minBuildApi="14"
     description="Cache layer for feature">

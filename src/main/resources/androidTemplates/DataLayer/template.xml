@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Data Layer"
+    name="Data Layer"
     minApi="14"
     minBuildApi="14"
     description="Data layer for feature">

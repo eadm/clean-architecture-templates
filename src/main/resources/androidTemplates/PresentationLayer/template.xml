@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Presentation Layer"
+    name="Presentation Layer"
     minApi="14"
     minBuildApi="14"
     description="Presentation layer for feature">

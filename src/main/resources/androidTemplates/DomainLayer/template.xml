@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Domain Layer"
+    name="Domain Layer"
     minApi="14"
     minBuildApi="14"
     description="Domain layer for feature">

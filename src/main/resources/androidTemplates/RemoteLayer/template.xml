@@ -2,7 +2,7 @@
 <template
     format="5"
     revision="1"
-    name="Feature Remote Layer"
+    name="Remote Layer"
     minApi="14"
     minBuildApi="14"
     description="Remote layer for feature">
