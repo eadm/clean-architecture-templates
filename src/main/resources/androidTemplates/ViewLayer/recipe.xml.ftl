@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <recipe>
-    <#if isCreateDataSource!false>
+    <#if viewType == "activity">
         <instantiate
-                from="root/src/app_package/remote/feature_package/RemoteDataSourceImpl.kt.ftl"
+                from="root/src/app_package/view/feature_package/ui/activity/Activity.kt.ftl"
                 to="${escapeXmlAttribute(srcOut)}/remote/${camelCaseToUnderscore(featureName)}/${dataSourceName}Impl.kt" />
         <open file="${escapeXmlAttribute(srcOut)}/remote/${camelCaseToUnderscore(featureName)}/${dataSourceName}Impl.kt" />
     </#if>

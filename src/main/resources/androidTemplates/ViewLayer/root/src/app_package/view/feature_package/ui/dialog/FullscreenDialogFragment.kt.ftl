@@ -20,10 +20,10 @@ import ${packageName}.R
 import kotlinx.android.synthetic.main.${layoutName}.*
 import javax.inject.Inject
 
-class ${fragmentName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
+class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
     companion object {
         fun newInstance(): DialogFragment =
-            ${fragmentName}()
+            ${fragmentDialogName}()
     }
 
 <#if isMvp!false>

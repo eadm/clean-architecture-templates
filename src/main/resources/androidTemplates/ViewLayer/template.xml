@@ -2,10 +2,10 @@
 <template
     format="5"
     revision="1"
-    name="Feature Remote Layer"
+    name="Feature View Layer"
     minApi="14"
     minBuildApi="14"
-    description="Remote layer for feature">
+    description="View layer for feature">
 
     <category value="Clean Architecture" />
 	<formfactor value="Mobile" />
@@ -98,7 +98,7 @@
         default="SampleItem"
         suggest="${featureName}Item"
         visibility="isCreateList!false" />
-    
+
     <parameter
         id="viewType"
         name="View type"
@@ -109,6 +109,33 @@
         <option id="fragmentDialog">Fragment Dialog</option>
         <option id="fullscreenFragmentDialog">Fullscreen Fragment Dialog</option>
     </parameter>
+
+    <parameter
+        id="activityName"
+        name="Activity name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleActivity"
+        suggest="${featureName}Activity"
+        visibility="viewType == 'activity'" />
+
+    <parameter
+        id="fragmentName"
+        name="Fragment name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFragment"
+        suggest="${featureName}Fragment"
+        visibility="viewType == 'fragment'" />
+
+    <parameter
+        id="fragmentDialogName"
+        name="Fragment Dialog name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFragmentDialog"
+        suggest="${featureName}FragmentDialog"
+        visibility="viewType == 'fragmentDialog' || viewType == 'fullscreenFragmentDialog'" />
 
 <!--    <thumbs>-->
 <!--        <thumb>template_droidcon.png</thumb>-->
