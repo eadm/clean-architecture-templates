@@ -64,7 +64,7 @@ class GeneratorProjectComponent(
         val listener = NotificationListener { notification, event ->
             if (event.eventType === HyperlinkEvent.EventType.ACTIVATED) {
                 notification.hideBalloon()
-                val sourceDirectoryList = listOf("/androidTemplates/", "/projectTemplates/")
+                val sourceDirectoryList = listOf("/androidTemplates/")
                 val writeDirectoryList = listOf("/.android/templates/other", "/.android/templates")
                 FileUtils.copyTemplates(sourceDirectoryList, writeDirectoryList, null)
             }
