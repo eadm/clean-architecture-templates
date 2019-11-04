@@ -1,14 +1,15 @@
 package ${packageName}.domain.${camelCaseToUnderscore(featureName)}.repository
-
+<#include "../../../../../../../common/Common.kt.ftl">
+import ${itemPackage}.${itemName}
 <#if isExposeSaveOperation!false>
 import io.reactivex.Completable
 </#if>
 import io.reactivex.Single
 
 interface ${repositoryName} {
-    override fun get${itemName}s(vararg ids: ${idType}, primarySourceType: DataSourceType = DataSourceType.REMOTE): Single<List<${itemName}>>
+    <@getter itemName=itemName idType=idType isSupportSourceType=true isSingleItem=isSingleItemOperation primarySourceType=DataSourceType.REMOTE />
 
 <#if isExposeSaveOperation!false>
-    override fun save${itemName}s(items: List<${itemName}>): Completable
+    <@setter itemName=itemName isSingleItem=isSingleItemOperation />
 </#if>
 }

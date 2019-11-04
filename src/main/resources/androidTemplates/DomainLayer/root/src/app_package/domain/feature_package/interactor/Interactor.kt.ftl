@@ -1,5 +1,7 @@
 package ${packageName}.domain.${camelCaseToUnderscore(featureName)}.interactor
 
+import ${itemPackage}.${itemName}
+
 class ${interactorName}
 @Inject
 constructor(
