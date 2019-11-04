@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>ru.nobird.arch.generator</id>
-    <name>Code generator for feature based CLEAN Android arch</name>
+    <name>Code templates for feature based CLEAN Android architecture</name>
     <vendor email="support@nobird.ru" url="http://nobird.ru">Nobird</vendor>
     <idea-version since-build="181.*"/>
     <description><![CDATA[
@@ -12,28 +12,9 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
-
-    <actions>
-        <!-- Add your action here -->
-        <action id="ru.nobird.arch.generator.NewFeatureAction"
-                class="ru.nobird.arch.generator.action.NewFeatureAction"
-                text="Clean Feature"
-                description="Creates new CLEAN feature">
-            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="Kotlin.NewFile" />
-        </action>
-    </actions>
     <project-components>
         <component>
             <implementation-class>ru.nobird.arch.generator.component.GeneratorProjectComponent</implementation-class>
         </component>
     </project-components>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <defaultProjectTypeProvider type="Android"/>
-
-        <projectConfigurable instance="ru.nobird.arch.generator.settings.GeneratorSettings">
-        </projectConfigurable>
-        <fileTemplateGroup implementation="ru.nobird.arch.generator.template.GeneratorTemplateFactory" />
-    </extensions>
-
 </idea-plugin>
