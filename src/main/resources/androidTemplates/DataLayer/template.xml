@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Data Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Data layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Root package"
+        type="string"
+        constraints="package"
+        default="" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        default="SampleFeature" />
+
+    <parameter
+        id="itemName"
+        name="Item name (if not equal to feature name)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeature"
+        suggest="${featureName}" />
+
+    <parameter
+        id="itemPackage"
+        name="Package of item"
+        type="string"
+        constraints="package"
+        suggest="${packageName}.domain.${camelCaseToUnderscore(featureName)}.model" />
+
+    <parameter
+        id="idType"
+        name="Id type of item"
+        type="string"
+        constraints="class|nonempty"
+        default="Long" />
+
+    <parameter
+        id="isSingleItemOperation"
+        name="Only single item operations supported?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="isCreateRepository"
+        name="Create repository?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="repositoryName"
+        name="Repository interface name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleRepository"
+        suggest="${featureName}Repository"
+        visibility="isCreateRepository!false" />
+
+    <parameter
+        id="isCreateRemoteDataSource"
+        name="Create remote data source interface?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="remoteDataSourceName"
+        name="RemoteDataSource name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleRemoteDataSource"
+        suggest="${featureName}RemoteDataSource"
+        visibility="isCreateRemoteDataSource!false" />
+
+    <parameter
+        id="isCreateCacheDataSource"
+        name="Create cache data source interface?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="cacheDataSourceName"
+        name="CacheDataSource name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleCacheDataSource"
+        suggest="${featureName}CacheDataSource"
+        visibility="isCreateCacheDataSource!false" />
+
+    <parameter
+        id="isExposeSaveOperation"
+        name="Expose save operation in repository?"
+        type="boolean"
+        visibility="isCreateCacheDataSource!false"
+        default="false" />
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

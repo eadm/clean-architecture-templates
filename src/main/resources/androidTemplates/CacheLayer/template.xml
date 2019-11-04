@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="1"
+    name="Cache Layer"
+    minApi="14"
+    minBuildApi="14"
+    description="Cache layer for feature">
+
+    <category value="Clean Architecture" />
+	<formfactor value="Mobile" />
+
+    <parameter
+        id="packageName"
+        name="Root package"
+        type="string"
+        constraints="package"
+        default="" />
+
+    <parameter
+        id="featureName"
+        name="Feature name"
+        type="string"
+        default="SampleFeature" />
+
+    <parameter
+        id="itemName"
+        name="Item name (if not equal to feature name)"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeature"
+        suggest="${featureName}" />
+
+    <parameter
+        id="itemPackage"
+        name="Package of item"
+        type="string"
+        constraints="package"
+        suggest="${packageName}.domain.${camelCaseToUnderscore(featureName)}.model" />
+
+    <parameter
+        id="idType"
+        name="Id type of item"
+        type="string"
+        constraints="class|nonempty"
+        default="Long" />
+
+    <parameter
+        id="isSingleItemOperation"
+        name="Only single item operations supported?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="isCreateDataSource"
+        name="Create cache data source impl?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="dataSourceName"
+        name="Cache data source interface name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleCacheDataSource"
+        suggest="${featureName}CacheDataSource"
+        visibility="isCreateDataSource!false" />
+
+    <parameter
+        id="isCreateDao"
+        name="Create dao interface?"
+        type="boolean"
+        default="true" />
+
+    <parameter
+        id="daoName"
+        name="Dao name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleDao"
+        suggest="${featureName}Dao"
+        visibility="isCreateDao!false" />
+
+    <parameter
+        id="isCreateEntity"
+        name="Create entity?"
+        type="boolean"
+        default="false" />
+
+    <parameter
+        id="entityName"
+        name="Entity name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureEntity"
+        suggest="${itemName}Entity"
+        visibility="isCreateEntity!false" />
+
+    <parameter
+        id="isCreateEntityMapper"
+        name="Create entity mapper?"
+        type="boolean"
+        visibility="isCreateEntity!false"
+        default="false" />
+
+    <parameter
+        id="entityMapperName"
+        name="Entity mapper name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="SampleFeatureEntityMapper"
+        suggest="${entityName}Mapper"
+        visibility="isCreateEntityMapper!false" />
+
+<!--    <thumbs>-->
+<!--        <thumb>template_droidcon.png</thumb>-->
+<!--    </thumbs>-->
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>
