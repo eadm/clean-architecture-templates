@@ -5,6 +5,7 @@ import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.mapper.
 </#if>
 import ${packageName}.domain.${camelCaseToUnderscore(featureName)}.interactor.${interactorName}
 import ${itemPackage}.${itemName}
+import io.reactivex.Scheduler
 import ru.nobird.android.presentation.base.PresenterBase
 import javax.inject.Inject
 

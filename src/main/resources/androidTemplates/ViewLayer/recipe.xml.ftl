@@ -7,7 +7,7 @@
         <open file="${escapeXmlAttribute(srcOut)}/view/${camelCaseToUnderscore(featureName)}/ui/activity/${activityName}.kt" />
 
         <instantiate
-                from="root/res/layout/layout.ftl"
+                from="root/res/layout/layout.xml.ftl"
                 to="${escapeXmlAttribute(resOut)}/layout/${activityLayoutName}.xml" />
         <open file="${escapeXmlAttribute(resOut)}/layout/${activityLayoutName}.xml" />
     <#elseif viewType == "fragment">
@@ -17,7 +17,7 @@
         <open file="${escapeXmlAttribute(srcOut)}/view/${camelCaseToUnderscore(featureName)}/ui/fragment/${fragmentName}.kt" />
 
         <instantiate
-                from="root/res/layout/layout.ftl"
+                from="root/res/layout/layout.xml.ftl"
                 to="${escapeXmlAttribute(resOut)}/layout/${fragmentLayoutName}.xml" />
         <open file="${escapeXmlAttribute(resOut)}/layout/${fragmentLayoutName}.xml" />
     <#elseif viewType == "fragmentDialog">
@@ -27,7 +27,7 @@
         <open file="${escapeXmlAttribute(srcOut)}/view/${camelCaseToUnderscore(featureName)}/ui/dialog/${fragmentDialogName}.kt" />
 
         <instantiate
-                from="root/res/layout/layout.ftl"
+                from="root/res/layout/layout.xml.ftl"
                 to="${escapeXmlAttribute(resOut)}/layout/${fragmentDialogLayoutName}.xml" />
         <open file="${escapeXmlAttribute(resOut)}/layout/${fragmentDialogLayoutName}.xml" />
     <#elseif viewType == "fullscreenFragmentDialog">
@@ -37,7 +37,7 @@
         <open file="${escapeXmlAttribute(srcOut)}/view/${camelCaseToUnderscore(featureName)}/ui/dialog/${fragmentDialogName}.kt" />
 
         <instantiate
-                from="root/res/layout/layout.ftl"
+                from="root/res/layout/layout.xml.ftl"
                 to="${escapeXmlAttribute(resOut)}/layout/${fragmentDialogLayoutName}.xml" />
         <open file="${escapeXmlAttribute(resOut)}/layout/${fragmentDialogLayoutName}.xml" />
     </#if>

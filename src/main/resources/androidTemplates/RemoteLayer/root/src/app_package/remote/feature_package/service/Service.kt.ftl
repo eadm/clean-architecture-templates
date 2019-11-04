@@ -9,6 +9,7 @@ import retrofit2.http.Query
 
 interface ${serviceName} {
 <#if isCreateResponse!false>
+    @GET
     fun get${itemName}s(@Query("ids[]") ids: List<${idType}>): Single<${responseName}>
 </#if>
 }

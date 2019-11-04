@@ -1,5 +1,9 @@
 package ${packageName}.presentation.${camelCaseToUnderscore(featureName)}
 
+<#if isCreateListItem!false>
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.model
+</#if>
+
 interface ${viewName} {
     sealed class State {
         object Idle : State()
