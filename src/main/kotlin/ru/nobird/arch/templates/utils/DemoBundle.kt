@@ -1,4 +1,4 @@
-package ru.nobird.arch.generator.utils
+package ru.nobird.arch.templates.utils
 
 import com.intellij.CommonBundle
 import org.jetbrains.annotations.NonNls

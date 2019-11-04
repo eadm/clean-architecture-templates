@@ -1,4 +1,4 @@
-package  ru.nobird.arch.generator.utils
+package  ru.nobird.arch.templates.utils
 
 import com.intellij.notification.NotificationDisplayType
 import com.intellij.notification.NotificationGroup
@@ -6,7 +6,7 @@ import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
-import ru.nobird.arch.generator.utils.DemoBundle.message
+import ru.nobird.arch.templates.utils.DemoBundle.message
 import javax.swing.event.HyperlinkEvent
 
 object Utils {

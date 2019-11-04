@@ -1,8 +1,8 @@
-package ru.nobird.arch.generator.utils
+package ru.nobird.arch.templates.utils
 
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
-import ru.nobird.arch.generator.utils.DemoBundle.message
+import ru.nobird.arch.templates.utils.DemoBundle.message
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream

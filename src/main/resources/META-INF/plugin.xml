@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>ru.nobird.arch.generator</id>
+    <id>ru.nobird.arch.templates</id>
     <name>Code templates for feature based CLEAN Android architecture</name>
     <vendor email="support@nobird.ru" url="http://nobird.ru">Nobird</vendor>
     <idea-version since-build="181.*"/>
@@ -14,7 +14,7 @@
     -->
     <project-components>
         <component>
-            <implementation-class>ru.nobird.arch.generator.component.GeneratorProjectComponent</implementation-class>
+            <implementation-class>ru.nobird.arch.templates.component.GeneratorProjectComponent</implementation-class>
         </component>
     </project-components>
 </idea-plugin>

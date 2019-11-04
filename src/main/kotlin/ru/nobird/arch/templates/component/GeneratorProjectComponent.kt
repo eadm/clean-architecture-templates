@@ -1,4 +1,4 @@
-package ru.nobird.arch.generator.component
+package ru.nobird.arch.templates.component
 
 import com.intellij.ide.plugins.PluginManager
 import com.intellij.notification.NotificationListener
@@ -8,9 +8,9 @@ import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.XmlSerializerUtil
 import com.intellij.util.xmlb.annotations.Attribute
-import ru.nobird.arch.generator.utils.DemoBundle
-import ru.nobird.arch.generator.utils.FileUtils
-import ru.nobird.arch.generator.utils.Utils
+import ru.nobird.arch.templates.utils.DemoBundle
+import ru.nobird.arch.templates.utils.FileUtils
+import ru.nobird.arch.templates.utils.Utils
 import java.io.Serializable
 import javax.swing.event.HyperlinkEvent
 
