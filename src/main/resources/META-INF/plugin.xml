@@ -14,7 +14,7 @@
     -->
     <project-components>
         <component>
-            <implementation-class>ru.nobird.arch.templates.component.GeneratorProjectComponent</implementation-class>
+            <implementation-class>ru.nobird.arch.templates.component.TemplatesProjectComponent</implementation-class>
         </component>
     </project-components>
 </idea-plugin>

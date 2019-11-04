@@ -15,20 +15,20 @@ import java.io.Serializable
 import javax.swing.event.HyperlinkEvent
 
 @State(
-    name = "GeneratorBaseConfiguration",
+    name = "TemplatesBaseConfiguration",
     storages = [Storage(value = "baseConfiguration.xml")]
 )
-class GeneratorProjectComponent(
+class TemplatesProjectComponent(
     project: Project? = null
 ) : AbstractProjectComponent(project),
-    PersistentStateComponent<GeneratorProjectComponent>,
+    PersistentStateComponent<TemplatesProjectComponent>,
     Serializable {
 
     companion object {
-        private const val PLUGIN_ID = "ru.nobird.arch.generator"
+        private const val PLUGIN_ID = "ru.nobird.arch.templates"
 
-        fun getInstance(project: Project): GeneratorProjectComponent =
-            project.getComponent(GeneratorProjectComponent::class.java)
+        fun getInstance(project: Project): TemplatesProjectComponent =
+            project.getComponent(TemplatesProjectComponent::class.java)
     }
 
     @Attribute
@@ -79,9 +79,9 @@ class GeneratorProjectComponent(
         return false
     }
 
-    override fun getState(): GeneratorProjectComponent? = this
+    override fun getState(): TemplatesProjectComponent? = this
 
-    override fun loadState(state: GeneratorProjectComponent) {
+    override fun loadState(state: TemplatesProjectComponent) {
         XmlSerializerUtil.copyBean(state, this)
     }
 }
