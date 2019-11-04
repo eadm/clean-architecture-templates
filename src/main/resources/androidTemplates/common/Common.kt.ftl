@@ -22,9 +22,18 @@
         .get(${presenterName}::class.java)
 </#macro>
 
-<#macro presenterAttach presenterName="Presenter">
+<#macro presenterAttach presenterName="Presenter" isFullscreenDialog=false>
     override fun onStart() {
         super.onStart()
+        <#if isFullscreenDialog>
+        dialog
+            ?.window
+            ?.let { window ->
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,  ViewGroup.LayoutParams.MATCH_PARENT)
+                window.setWindowAnimations(R.style.AppTheme_FullScreenDialog)
+            }
+        </#if>
+
         ${presenterName?uncap_first}.attachView(this)
     }
 

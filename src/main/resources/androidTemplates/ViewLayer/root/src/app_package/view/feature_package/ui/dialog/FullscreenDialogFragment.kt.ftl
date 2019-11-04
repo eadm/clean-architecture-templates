@@ -1,4 +1,4 @@
-package ${packageName}.view.${camelCaseToUnderscore(featureName)}.ui.fragment
+package ${packageName}.view.${camelCaseToUnderscore(featureName)}.ui.dialog
 <#include "../../../../../../../../common/Common.kt.ftl" />
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +15,9 @@ import ru.nobird.android.ui.viewstatedelegate.ViewStateDelegate
 import kotlinx.android.synthetic.main.${layoutName}.*
 import javax.inject.Inject
 
-class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
+class ${fragmentName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
     companion object {
-        fun newInstance(): Fragment =
+        fun newInstance(): DialogFragment =
             ${fragmentName}()
     }
 
@@ -32,6 +32,14 @@ class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
 <#if isMvp!false>
     private lateinit var viewStateDelegate: ViewStateDelegate<${viewName}.State>
 </#if>
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +76,7 @@ class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
 </#if>
 
 <#if isMvp!false>
-    <@presenterAttach presenterName=presenterName />
+    <@presenterAttach presenterName=presenterName isFullscreenDialog=true />
 
     override fun setState(state: ${viewName}.State) {
         when (state) {
