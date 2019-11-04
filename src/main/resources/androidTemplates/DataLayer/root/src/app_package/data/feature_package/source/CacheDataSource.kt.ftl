@@ -1,10 +1,10 @@
 package ${packageName}.data.${camelCaseToUnderscore(featureName)}.source
-
+<#include "../../../../../../../common/Common.kt.ftl">
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface ${cacheDataSourceName} {
-    fun get${itemName}s(vararg ids: ${idType}): Single<List<${itemName}>>
+    <@getter itemName=itemName idType=idType />
 
-    fun save${itemName}s(items: List<${itemName}>): Completable
+    <@setter itemName=itemName />
 }

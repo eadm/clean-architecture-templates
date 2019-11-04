@@ -1,5 +1,5 @@
 package ${packageName}.data.${camelCaseToUnderscore(featureName)}.repository
-
+<#include "../../../../../../../common/Common.kt.ftl">
 <#if isCreateCacheDataSource!false>
 import ${packageName}.data.${camelCaseToUnderscore(featureName)}.source.${cacheDataSourceName}
 </#if>
@@ -23,7 +23,7 @@ constructor(
     private val ${remoteDataSourceName?uncap_first}: ${remoteDataSourceName}
 </#if>
 ) : ${repositoryName} {
-    override fun get${itemName}s(vararg ids: ${idType}, primarySourceType: DataSourceType): Single<List<${itemName}>> {
+    <@getter itemName=itemName idType=idType isOverride=true isSupportSourceType=true /> {
         <#if isCreateRemoteDataSource!false>
         val remoteSource = ${remoteDataSourceName?uncap_first}
             .get${itemName}s(*ids)
@@ -70,8 +70,8 @@ constructor(
         }.map { ${itemName?uncap_first}s -> ${itemName?uncap_first}s.sortedBy { ids.indexOf(it.id) } }
     }
 
-<#if isCreateRemoteDataSource!false && isExposeSaveOperation!false>
-    override fun save${itemName}s(items: List<${itemName}>): Completable =
+<#if isCreateCacheDataSource!false && isExposeSaveOperation!false>
+    <@setter itemName=itemName isOverride=true /> =
         ${cacheDataSourceName?uncap_first}
             .save${itemName}s(items)
 </#if>
