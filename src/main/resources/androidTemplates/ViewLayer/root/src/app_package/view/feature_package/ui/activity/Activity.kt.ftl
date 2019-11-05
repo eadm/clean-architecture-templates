@@ -27,7 +27,7 @@ class ${activityName} : AppCompatActivity()<#if isMvp!false>, ${viewName}</#if> 
 </#if>
 
 <#if isCreateList!false>
-    private lateinit var ${listItemName?uncap_first}adapter: DefaultDelegateAdapter<${listItemName}>
+    private lateinit var ${listItemName?uncap_first}Adapter: DefaultDelegateAdapter<${listItemName}>
 </#if>
 
 <#if isMvp!false>
