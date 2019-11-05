@@ -6,8 +6,12 @@ Set of templates for Android Studio to work with [feature based CLEAN architectu
 ## Installation 
 Install plugin from marketplace or by downloading plugin file and installing manually. After installation import plugins by pressing button in following notification.
 
+<img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/notification.png" width="360" />
+
 ## Usage
 Templates could be found under **Clean Architecture** category in new file menu. 
+
+<img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/category.png" width="360" />
 
 ### Root package
 Each template has **Root package** parameter that should be equal to parent package of layer packages. For example **Root package** for following package structure is **org.stepik.android**.
@@ -28,8 +32,12 @@ Generally order of layers creation is not crucial but to avoid issues with impor
 ## Установка 
 Установите плагин из репозитория JetBrains либо вручную, скачав zip архив. После установки необходимо импортировать новые шаблоны, нажав на кнопку на уведомлении.
 
+<img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/notification.png" width="360" />
+
 ## Использвание
 Шаблоны могут быть найдены в категории **Clean Architecture** в меню создания нового файла. 
+
+<img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/category.png" width="360" />
 
 ### Root package
 Каждый шаблон имеет параметр **Root package**, который должен быть равен родителю пакетов слоёв. Например для следующей структуры пакетов **Root package** должен быть равен **org.stepik.android**.
