@@ -34,7 +34,7 @@ Generally order of layers creation is not crucial but to avoid issues with impor
 
 <img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/notification.png" width="360" />
 
-## Использвание
+## Использование
 Шаблоны могут быть найдены в категории **Clean Architecture** в меню создания нового файла. 
 
 <img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/category.png" width="360" />
