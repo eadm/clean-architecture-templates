@@ -4,7 +4,7 @@ Set of templates for Android Studio to work with [feature based CLEAN architectu
 [Plugin page in marketplace](https://plugins.jetbrains.com/plugin/13275-code-templates-for-feature-based-clean-android-architecture)
 
 ## Installation 
-Install plugin from marketplace or by downloading plugin file and installing manually. After installation import plugins by pressing button in following notification.
+Install plugin from marketplace or by [downloading plugin file](https://github.com/eadm/clean-architecture-templates/releases) and installing manually. After installation import plugins by pressing button in following notification.
 
 <img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/notification.png" width="360" />
 
@@ -30,7 +30,7 @@ Generally order of layers creation is not crucial but to avoid issues with impor
 
 # clean-architecture-templates RU
 ## Установка 
-Установите плагин из репозитория JetBrains либо вручную, скачав zip архив. После установки необходимо импортировать новые шаблоны, нажав на кнопку на уведомлении.
+Установите плагин из репозитория JetBrains либо вручную, скачав [zip архив](https://github.com/eadm/clean-architecture-templates/releases). После установки необходимо импортировать новые шаблоны, нажав на кнопку на уведомлении.
 
 <img src="https://raw.githubusercontent.com/eadm/clean-architecture-templates/master/images/notification.png" width="360" />
 
