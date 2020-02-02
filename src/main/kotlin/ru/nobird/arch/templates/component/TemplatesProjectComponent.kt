@@ -1,9 +1,14 @@
 package ru.nobird.arch.templates.component
 
 import com.intellij.ide.plugins.PluginManager
+import com.intellij.notification.NotificationDisplayType
+import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
-import com.intellij.openapi.components.*
+import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.components.ProjectComponent
+import com.intellij.openapi.components.State
+import com.intellij.openapi.components.Storage
 import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.XmlSerializerUtil
@@ -14,13 +19,13 @@ import ru.nobird.arch.templates.utils.Utils
 import java.io.Serializable
 import javax.swing.event.HyperlinkEvent
 
+
 @State(
     name = "TemplatesBaseConfiguration",
     storages = [Storage(value = "baseConfiguration.xml")]
 )
-class TemplatesProjectComponent(
-    project: Project? = null
-) : AbstractProjectComponent(project),
+class TemplatesProjectComponent :
+    ProjectComponent,
     PersistentStateComponent<TemplatesProjectComponent>,
     Serializable {
 

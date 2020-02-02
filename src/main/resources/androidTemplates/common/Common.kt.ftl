@@ -46,7 +46,7 @@
 <#macro injectComponent componentName>
     private fun injectComponent() {
         App.component()
-            .${componentName}ComponentBuilder()
+            .${componentName?uncap_first}Builder()
             .build()
             .inject(this)
     }

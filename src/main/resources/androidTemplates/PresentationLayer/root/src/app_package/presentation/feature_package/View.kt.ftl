@@ -1,7 +1,7 @@
 package ${packageName}.presentation.${camelCaseToUnderscore(featureName)}
 
 <#if isCreateListItem!false>
-import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.model
+import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.model.${listItemName}
 </#if>
 
 interface ${viewName} {

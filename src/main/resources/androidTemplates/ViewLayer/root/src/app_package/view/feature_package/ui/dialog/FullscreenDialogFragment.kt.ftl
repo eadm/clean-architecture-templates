@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import ru.nobird.android.view.base.ui.extension.argument
 <#if isMvp!false>
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +17,7 @@ import ${packageName}.presentation.${camelCaseToUnderscore(featureName)}.${viewN
 </#if>
 import ${packageName}.R
 <#if isCreateList!false><@listImports /></#if>
-import kotlinx.android.synthetic.main.${dialogLayoutName}.*
+import kotlinx.android.synthetic.main.${fragmentDialogLayoutName}.*
 import javax.inject.Inject
 
 class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#if> {
@@ -31,7 +31,7 @@ class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#i
 </#if>
 
 <#if isCreateList!false>
-    private lateinit var ${listItemName?uncap_first}adapter: DefaultDelegateAdapter<${listItemName}>
+    private lateinit var ${listItemName?uncap_first}Adapter: DefaultDelegateAdapter<${listItemName}>
 </#if>
 
 <#if isMvp!false>
@@ -59,7 +59,7 @@ class ${fragmentDialogName} : DialogFragment()<#if isMvp!false>, ${viewName}</#i
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.${dialogLayoutName}, container, false)
+        inflater.inflate(R.layout.${fragmentDialogLayoutName}, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         <#if isMvp!false>

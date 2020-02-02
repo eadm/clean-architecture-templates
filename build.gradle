@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'ru.nobird.arch'
-version '1.0'
+version '1.1'
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ dependencies {
 intellij {
     version '2019.1'
     plugins = ['Kotlin', 'android']
-    alternativeIdePath '/Users/ruslandavletshin/Library/Application Support/JetBrains/Toolbox/apps/AndroidStudio/ch-0/191.5900203/Android Studio.app'
+    alternativeIdePath '/Users/ruslandavletshin/Library/Application Support/JetBrains/Toolbox/apps/AndroidStudio/ch-0/191.6010548/Android Studio.app'
 }
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
