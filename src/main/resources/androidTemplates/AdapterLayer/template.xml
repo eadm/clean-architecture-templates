@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<template
+        format="5"
+        revision="1"
+        name="Adapter Layer"
+        minApi="14"
+        minBuildApi="14"
+        description="List adapters for feature">
+
+    <category value="Clean Architecture" />
+    <formfactor value="Mobile" />
+
+    <parameter
+            id="packageName"
+            name="Root package"
+            type="string"
+            constraints="package"
+            default="" />
+
+    <parameter
+            id="featureName"
+            name="Feature name"
+            type="string"
+            default="SampleFeature" />
+
+    <parameter
+            id="adapterName"
+            name="Adapter delegate name"
+            type="string"
+            constraints="class|nonempty|unique"
+            default="SampleAdapterDelegate"
+            suggest="${featureName}AdapterDelegate"
+             />
+
+    <parameter
+            id="adapterLayoutName"
+            name="Adapter layout name"
+            type="string"
+            constraints="class|nonempty|unique"
+            default="fragment_sample"
+            suggest="item_${camelCaseToUnderscore(featureName)}"
+    />
+
+    <parameter
+            id="listItemName"
+            name="List item name"
+            type="string"
+            constraints="class|nonempty|unique"
+            default="SampleItem"
+            suggest="${featureName}Item"
+    />
+
+    <parameter
+            id="hasClickListener"
+            name="Has click listener?"
+            type="boolean"
+            default="false" />
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>
