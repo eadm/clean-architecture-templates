@@ -17,7 +17,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.1'
+    version '2019.3.3'
     plugins = ['Kotlin', 'android']
     alternativeIdePath '/Users/ruslandavletshin/Library/Application Support/JetBrains/Toolbox/apps/AndroidStudio/ch-0/193.6626763/Android Studio.app'
 }

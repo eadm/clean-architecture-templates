@@ -1,8 +1,6 @@
 package ru.nobird.arch.templates.component
 
 import com.intellij.ide.plugins.PluginManager
-import com.intellij.notification.NotificationDisplayType
-import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.components.PersistentStateComponent
@@ -18,7 +16,6 @@ import ru.nobird.arch.templates.utils.FileUtils
 import ru.nobird.arch.templates.utils.Utils
 import java.io.Serializable
 import javax.swing.event.HyperlinkEvent
-
 
 @State(
     name = "TemplatesBaseConfiguration",
