@@ -24,7 +24,7 @@ import ${packageName}.remote.${camelCaseToUnderscore(featureName)}.service.${ser
 abstract class ${dataModuleName} {
     @Binds
     internal abstract fun bind${repositoryName}(
-        ${repositoryName?uncap_first}impl: ${repositoryName}Impl
+        ${repositoryName?uncap_first}Impl: ${repositoryName}Impl
     ): ${repositoryName}
 
 <#if hasCacheDataSource!false>
