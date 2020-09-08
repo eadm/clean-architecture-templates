@@ -2,7 +2,7 @@
     <id>ru.nobird.arch.templates</id>
     <name>Code templates for feature based CLEAN Android architecture</name>
     <vendor email="support@nobird.ru" url="http://nobird.ru">Nobird</vendor>
-    <idea-version since-build="181.*"/>
+    <idea-version since-build="193.*"/>
     <description><![CDATA[
     This plugin will help to generate code for feature based CLEAN Android arch
     ]]></description>

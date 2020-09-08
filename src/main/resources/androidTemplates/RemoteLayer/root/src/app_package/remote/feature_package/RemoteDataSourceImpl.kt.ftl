@@ -1,7 +1,7 @@
 package ${packageName}.remote.${camelCaseToUnderscore(featureName)}
 <#include "../../../../../../common/Common.kt.ftl">
 <#if isCreateService!false>
-import ${packageName}.remote.${camelCaseToUnderscore(featureName)}.servce.${serviceName}
+import ${packageName}.remote.${camelCaseToUnderscore(featureName)}.service.${serviceName}
 </#if>
 <#if isCreateResponseMapper!false>
 import ${packageName}.remote.${camelCaseToUnderscore(featureName)}.mapper.${responseMapperName}

@@ -1,4 +1,4 @@
-package ${packageName}.remote.${camelCaseToUnderscore(featureName)}.dao
+package ${packageName}.remote.${camelCaseToUnderscore(featureName)}.service
 
 <#if isCreateResponse!false>
 import ${packageName}.remote.${camelCaseToUnderscore(featureName)}.model.${responseName}
