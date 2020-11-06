@@ -1,9 +1,7 @@
 package ${packageName}.view.${camelCaseToUnderscore(featureName)}.ui.fragment
 <#include "../../../../../../../../common/Common.kt.ftl" />
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.nobird.android.view.base.ui.extension.argument
 <#if isMvp!false>
@@ -18,7 +16,7 @@ import ${packageName}.R
 import kotlinx.android.synthetic.main.${fragmentLayoutName}.*
 import javax.inject.Inject
 
-class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
+class ${fragmentName} : Fragment(R.layout.${fragmentLayoutName})<#if isMvp!false>, ${viewName}</#if> {
     companion object {
         fun newInstance(): Fragment =
             ${fragmentName}()
@@ -47,9 +45,6 @@ class ${fragmentName} : Fragment()<#if isMvp!false>, ${viewName}</#if> {
             <@presenterInit presenterName=presenterName />
         </#if>
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.${fragmentLayoutName}, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         <#if isMvp!false>
