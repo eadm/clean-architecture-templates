@@ -7,6 +7,8 @@
     This plugin will help to generate code for feature based CLEAN Android arch
     ]]></description>
 
+    <depends>com.intellij.modules.platform</depends>
+
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <!-- uncomment to enable plugin in all products

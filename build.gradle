@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.22'
+    id 'org.jetbrains.intellij' version '0.6.2'
     id 'org.jetbrains.kotlin.jvm' version '1.4.0'
 }
 
@@ -19,7 +19,7 @@ dependencies {
 intellij {
     version '2020.1'
     plugins = ['Kotlin', 'android']
-    alternativeIdePath '/Users/ruslandavletshin/Library/Application Support/JetBrains/Toolbox/apps/AndroidStudio/ch-0/193.6626763/Android Studio.app'
+    alternativeIdePath '/Users/ruslandavletshin/Library/Application Support/JetBrains/Toolbox/apps/AndroidStudio/ch-0/201.6858069/Android Studio.app'
 }
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
