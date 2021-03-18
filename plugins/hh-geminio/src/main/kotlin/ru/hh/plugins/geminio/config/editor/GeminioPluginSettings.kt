@@ -7,7 +7,6 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.XmlSerializerUtil
 import ru.hh.plugins.geminio.config.GeminioPluginConfig
-import ru.hh.plugins.geminio.config.extensions.isNotFullyInitialized
 import ru.hh.plugins.utils.yaml.YamlUtils
 
 
@@ -19,13 +18,12 @@ class GeminioPluginSettings : PersistentStateComponent<GeminioPluginSettings> {
 
     companion object {
 
-        private const val DEFAULT_PATH_TO_CONFIG_FILE = "android-style-guide/tools/geminio/geminio_config.yaml"
-
-
         fun getInstance(project: Project): GeminioPluginSettings {
             return project.service<GeminioPluginSettings>().let { settings ->
-                if (project.isDefault.not() && settings.config.isNotFullyInitialized()) {
-                    settings.tryLoadFromConfigFile(DEFAULT_PATH_TO_CONFIG_FILE)
+                val configPath = settings.config.configFilePath.takeIf { it.isNotEmpty() }
+
+                if (configPath != null) {
+                    settings.tryLoadFromConfigFile(configPath)
                 }
 
                 settings

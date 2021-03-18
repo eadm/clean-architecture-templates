@@ -85,7 +85,6 @@ class ExecuteGeminioTemplateAction(
                     super.onWizardFinished(result)
 
                     if (result.isFinished.not()) {
-                        project.balloonError(message = "User closed Geminio Template Wizard")
                         return
                     }
 

@@ -8,7 +8,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.StartupActivity
 import ru.hh.plugins.extensions.toUnderlines
 import ru.hh.plugins.geminio.GeminioConstants
-import ru.hh.plugins.geminio.actions.module_template.ExecuteGeminioModuleTemplateAction
 import ru.hh.plugins.geminio.actions.template.ExecuteGeminioTemplateAction
 import ru.hh.plugins.geminio.config.GeminioPluginConfig
 import ru.hh.plugins.geminio.config.editor.GeminioPluginSettings
@@ -24,6 +23,8 @@ class GeminioStartupActivity : StartupActivity {
         private const val BASE_ID = "ru.hh.plugins.geminio.actions."
 
         private const val NEW_GROUP_ID_SUFFIX = "NewGroup."
+        private const val GROUP1_ID_SUFFIX = "Group1."
+        private const val GROUP2_ID_SUFFIX = "Group2."
         private const val GENERATE_GROUP_ID_SUFFIX = "GenerateGroup."
     }
 
@@ -34,17 +35,43 @@ class GeminioStartupActivity : StartupActivity {
             val pluginConfig = GeminioPluginSettings.getConfig(project)
 
             val pathToConfig = pluginConfig.configFilePath
-            val pathToTemplates = project.basePath + pluginConfig.templatesRootDirPath
-            val pathToModulesTemplates = project.basePath + pluginConfig.modulesTemplatesRootDirPath
+            val pathToTemplates: String? = pluginConfig
+                .templateGroupsPath
+                .let { path ->
+                    if (path.startsWith("./") || path.startsWith(".\\")) {
+                        // convert relative path to absolute
+                        val basePath: String = pathToConfig.let { base ->
+                            base.replaceAfterLast("/", "", "")
+                                .takeIf { it.isNotEmpty() }
+                                ?: base.replaceAfterLast("\\", "", "")
+                        }
+
+                        (basePath + path.substring(2)).takeIf { basePath.isNotEmpty() }
+                    } else {
+                        // if it isn't relative then it is absolute
+                        path
+                    }
+                }
+                ?.takeIf { it.isNotEmpty() }
 
             println("\tpathToConfig: $pathToConfig")
             println("\tpathToTemplates: $pathToTemplates")
-            println("\tpathToModulesTemplates: $pathToModulesTemplates")
             println("============")
             println("============")
 
-            createActionsForTemplates(pluginConfig, pathToTemplates, false)
-            createActionsForTemplates(pluginConfig, pathToModulesTemplates, true)
+            if (pathToTemplates != null) {
+                val pathEndSlash = "/".takeUnless { pathToTemplates.endsWith('/') } ?: ""
+
+                if (pluginConfig.groupsNames.group1.isNotEmpty()) {
+                    val fullPath = pathToTemplates + pathEndSlash + pluginConfig.groupsNames.group1
+                    createActionsForTemplates(pluginConfig, fullPath, true)
+                }
+
+                if (pluginConfig.groupsNames.group2.isNotEmpty()) {
+                    val fullPath = pathToTemplates + pathEndSlash + pluginConfig.groupsNames.group2
+                    createActionsForTemplates(pluginConfig, fullPath, false)
+                }
+            }
 
             println("GeminioStartupActivity::END")
             println("==============================================")
@@ -55,15 +82,15 @@ class GeminioStartupActivity : StartupActivity {
     private fun createActionsForTemplates(
         pluginConfig: GeminioPluginConfig,
         rootDirPath: String,
-        isModulesTemplates: Boolean
+        isGroup1: Boolean
     ) {
         val rootDirectory = File(rootDirPath)
         if (rootDirectory.exists().not() || rootDirectory.isDirectory.not()) {
-            println("Templates directory doesn't exists [path: $rootDirPath, isModulesTemplates: $isModulesTemplates]")
+            println("Templates directory doesn't exists [path: $rootDirPath, isGroup1: $isGroup1]")
             return
         }
 
-        println("\tTemplates directory exists [path: $rootDirPath, isModulesTemplates: $isModulesTemplates]")
+        println("\tTemplates directory exists [path: $rootDirPath, isGroup1: $isGroup1]")
         val templatesDirs = rootDirectory.list { file, _ -> file.isDirectory } ?: emptyArray()
 
         println("\tTemplates count: ${templatesDirs.size}")
@@ -71,8 +98,8 @@ class GeminioStartupActivity : StartupActivity {
 
         val actionManager = ActionManager.getInstance()
 
-        val bundle = getTemplateActionsBundle(pluginConfig, isModulesTemplates)
-
+        val bundle = getTemplateActionsBundle(pluginConfig, isGroup1)
+        val groupIdSuffix = if (isGroup1) GROUP1_ID_SUFFIX else GROUP2_ID_SUFFIX
 
         val hhNewGroup = actionManager.getAction(bundle.templatesNewGroupId) as DefaultActionGroup
         hhNewGroup.templatePresentation.text = bundle.templatesNewGroupName
@@ -82,20 +109,24 @@ class GeminioStartupActivity : StartupActivity {
             val newActionForNewGroup = createActionForTemplate(
                 templatesRootDirPath = rootDirPath,
                 templateDirName = templateName,
-                isModulesTemplates = isModulesTemplates,
                 actionManager = actionManager,
-                actionId = BASE_ID + NEW_GROUP_ID_SUFFIX + templateName.toUnderlines()
+                actionId = BASE_ID + NEW_GROUP_ID_SUFFIX + groupIdSuffix + templateName.toUnderlines()
             )
-            hhNewGroup += newActionForNewGroup
+
+            if (newActionForNewGroup != null) {
+                hhNewGroup += newActionForNewGroup
+            }
 
             val newActionForGenerateGroup = createActionForTemplate(
                 templatesRootDirPath = rootDirPath,
                 templateDirName = templateName,
-                isModulesTemplates = isModulesTemplates,
                 actionManager = actionManager,
-                actionId = BASE_ID + GENERATE_GROUP_ID_SUFFIX + templateName.toUnderlines()
+                actionId = BASE_ID + GENERATE_GROUP_ID_SUFFIX + groupIdSuffix + templateName.toUnderlines()
             )
-            hhGenerateGroup += newActionForGenerateGroup
+
+            if (newActionForGenerateGroup != null) {
+                hhGenerateGroup += newActionForGenerateGroup
+            }
         }
     }
 
@@ -103,30 +134,21 @@ class GeminioStartupActivity : StartupActivity {
     private fun createActionForTemplate(
         templatesRootDirPath: String,
         templateDirName: String,
-        isModulesTemplates: Boolean,
         actionManager: ActionManager,
         actionId: String,
-    ): AnAction {
-        val action = when {
-            isModulesTemplates -> {
-                ExecuteGeminioModuleTemplateAction(
-                    actionText = templateDirName,
-                    actionDescription = "Action for executing '$templateDirName'",
-                    geminioRecipePath = getGeminioRecipeFilePath(templatesRootDirPath, templateDirName)
-                )
-            }
+    ): AnAction? {
+        val action = ExecuteGeminioTemplateAction(
+            actionText = templateDirName,
+            actionDescription = "Action for executing '$templateDirName'",
+            geminioRecipePath = getGeminioRecipeFilePath(templatesRootDirPath, templateDirName)
+        )
 
-            else -> {
-                ExecuteGeminioTemplateAction(
-                    actionText = templateDirName,
-                    actionDescription = "Action for executing '$templateDirName'",
-                    geminioRecipePath = getGeminioRecipeFilePath(templatesRootDirPath, templateDirName)
-                )
-            }
+        return if (actionManager.getAction(actionId) == null) {
+            actionManager.registerAction(actionId, action)
+            action
+        } else {
+            null
         }
-        actionManager.registerAction(actionId, action)
-
-        return action
     }
 
     private fun getGeminioRecipeFilePath(templatesRootDirPath: String, templateDirName: String): String {
@@ -136,14 +158,14 @@ class GeminioStartupActivity : StartupActivity {
 
     private fun getTemplateActionsBundle(
         pluginConfig: GeminioPluginConfig,
-        isModulesTemplates: Boolean
+        isGroup1: Boolean
     ): TemplateActionsBundle {
         return when {
-            isModulesTemplates -> {
+            isGroup1 -> {
                 TemplateActionsBundle(
                     GeminioConstants.HH_MODULES_TEMPLATES_NEW_GROUP_ID,
                     GeminioConstants.HH_MODULES_TEMPLATES_GENERATE_GROUP_ID,
-                    pluginConfig.groupsNames.forNewModulesGroup
+                    pluginConfig.groupsNames.group1
                 )
             }
 
@@ -151,7 +173,7 @@ class GeminioStartupActivity : StartupActivity {
                 TemplateActionsBundle(
                     GeminioConstants.HH_TEMPLATES_NEW_GROUP_ID,
                     GeminioConstants.HH_TEMPLATES_GENERATE_GROUP_ID,
-                    pluginConfig.groupsNames.forNewGroup
+                    pluginConfig.groupsNames.group2
                 )
             }
         }

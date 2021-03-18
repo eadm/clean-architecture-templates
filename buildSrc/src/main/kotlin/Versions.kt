@@ -40,7 +40,7 @@ enum class Product(
 ) {
     LOCAL(
         isLocal = true,
-        ideVersion = "/Applications/Android Studio.app",
+        ideVersion = "C:\\Users\\ratio\\Desktop\\android-studio-4-2",
         pluginsNames = listOf(
             "android",
             "android-layoutlib",
@@ -49,61 +49,6 @@ enum class Product(
             "Groovy",
             "git4idea",
             "IntelliLang"
-        )
-    ),
-
-    IDEA_2020_2(
-        isLocal = false,
-        ideVersion = "2020.2",
-        pluginsNames = listOf(
-            "android",
-            "Kotlin",
-            "java",
-            "Groovy",
-            "git4idea"
-        )
-    ),
-
-    ANDROID_STUDIO_4_1(
-        ideVersion = "201.8743.12",
-        pluginsNames = listOf(
-            "android",
-            "Kotlin",
-            "java",
-            "Groovy",
-            "git4idea"
-        )
-    ),
-
-    ANDROID_STUDIO_4_0(
-        ideVersion = "193.6911.18",
-        pluginsNames = listOf(
-            "android",
-            "Kotlin",
-            "java",
-            "Groovy",
-            "git4idea"
-        )
-    ),
-
-    ANDROID_STUDIO_3_6_3(
-        ideVersion = "192.7142.36",
-        pluginsNames = listOf(
-            "android",
-            "Kotlin",
-            "java",
-            "Groovy",
-            "git4idea"
-        )
-    ),
-
-    ANDROID_STUDIO_3_5_3(
-        ideVersion = "191.8026.42",
-        pluginsNames = listOf(
-            "android",
-            "Kotlin",
-            "Groovy",
-            "git4idea"
         )
     )
 }
