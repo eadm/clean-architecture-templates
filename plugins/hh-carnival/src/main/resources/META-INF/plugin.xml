@@ -1,0 +1,163 @@
+<idea-plugin>
+    <id>ru.hh.plugins.Carnival</id>
+    <name>Carnival</name>
+    <vendor email="p.strelchenko@hh.ru" url="https://hh.ru">hh.ru</vendor>
+
+    <description><![CDATA[
+    Carnival - plugin for several useful actions and abilities.
+    ]]></description>
+
+    <change-notes><![CDATA[
+    1.1.3 -- Fix bug with duplicated service <br/>
+    <br/>
+
+    1.1.2 -- New feature: <br/>
+        - generate ViewModel for BaseFragment. All code was hardcoded inside plugin. <br/>
+    <br/>
+
+    1.1.0 -- Breaking changes: <br/>
+        - Remove action for generating new module - this functionality will be available through Geminio plugin <br/>
+    <br/>
+
+    1.0.0 -- Initial release: <br/>
+        - Action for generating new feature module <br/>
+        - Small actions for quick code generation: EMPTY object generator, @SerializedName annotations generator <br/>
+        - Action for creating new JIRA issue for develop branch merge <br/>
+        - Lint inspections for resources <br/>
+        - Deprecated resources annotator <br/>
+    <br/>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>org.intellij.groovy</depends>
+    <depends>org.jetbrains.android</depends>
+    <depends>Git4Idea</depends>
+
+    <version>1.1.3</version>
+    <idea-version since-build="201.8743.12"/>
+
+    <actions>
+        <!-- region Modules actions -->
+        <group description="Actions for modules" text="Modules Actions..." id="ru.hh.android.plugins.modules"
+               popup="true">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+            <separator/>
+
+            <action class="ru.hh.android.plugin.actions.modules.copy_module.CopyAndroidModuleAction"
+                    text="Copy Module..."
+                    id="ru.hh.android.plugin.actions.modules.copy_module.CopyAndroidModuleAction"/>
+
+        </group>
+        <!-- endregion -->
+
+        <!-- region Boilerplate routine actions -->
+        <group description="Boilerplate actions" text="Boilerplate" id="ru.hh.android.plugins.antiroutine.boilerplate">
+            <!-- Kotlin actions -->
+            <action class="ru.hh.android.plugin.actions.boilerplate.serialized_name.GenerateSerializedNameAnnotationsAction"
+                    id="ru.hh.android.plugin.actions.boilerplate.serialized_name.GenerateSerializedNameAnnotationsAction"
+                    text="Generate @SerializedName Annotations..."
+                    description="Generates @SeriaizedName annotations for each constructor parameter of Kotlin data class">
+                <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="KotlinGenerateGroup"/>
+            </action>
+            <action class="ru.hh.android.plugin.actions.boilerplate.empty_object.GenerateEmptyObjectAction"
+                    id="ru.hh.android.plugin.actions.boilerplate.empty_object.GenerateEmptyObjectAction"
+                    text="Generate EMPTY Object..."
+                    description="Generates EMPTY object declaration in Kotlin data class">
+                <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="KotlinGenerateGroup"/>
+            </action>
+            <action class="ru.hh.android.plugin.actions.boilerplate.fragment_view_model.GenerateFragmentViewModelAction"
+                    id="ru.hh.android.plugin.actions.boilerplate.fragment_view_model.GenerateFragmentViewModelAction"
+                    text="Fragment ViewModel"
+                    description="Generates ViewModel for fragment and several model classes">
+                <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="KotlinGenerateGroup"/>
+            </action>
+        </group>
+        <!-- endregion -->
+
+        <!-- region Jira actions -->
+        <group id="ru.hh.android.plugins.antiroutine.JiraToolsGroup"
+               text="Antiroutine JIRA"
+               description="Antiroutine's actions for simplifying life with JIRA"
+               popup="true">
+            <action id="ru.hh.android.plugin.actions.jira.merge_develop_to_portfolio.JiraMergeDevelopToPortfolioAction"
+                    class="ru.hh.android.plugin.actions.jira.merge_develop_to_portfolio.JiraMergeDevelopToPortfolioAction"
+                    text="Create Merge-Develop-To-Portfolio Issue..."
+                    description="Creates JIRA issue for merge develop branch into PORTFOLIO-branch"/>
+            <separator/>
+            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="KotlinToolsGroup"/>
+        </group>
+        <!-- endregion -->
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- region Plugin config -->
+        <projectConfigurable
+                id="ru.hh.android.plugin.config.PluginConfigConfigurable"
+                groupId="appearance"
+                displayName="HeadHunter Plugin"
+                instance="ru.hh.android.plugin.config.PluginConfigConfigurable"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.config.PluginConfig"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.config.JiraSettingsConfig"/>
+        <!-- endregion -->
+
+        <!-- region Plugin services -->
+        <projectService serviceImplementation="ru.hh.android.plugin.services.NotificationsFactory"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.services.Logger"/>
+        <projectService
+                serviceImplementation="ru.hh.android.plugin.services.code_generator.EmptyObjectGeneratorService"/>
+        <projectService
+                serviceImplementation="ru.hh.android.plugin.services.code_generator.SerializedNameAnnotationsGeneratorService"/>
+        <projectService
+                serviceImplementation="ru.hh.android.plugin.actions.boilerplate.fragment_view_model.GenerateFragmentViewModelTextFactory"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.services.jira.JiraIssueFactory"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.services.jira.JiraLinkFactory"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.services.jira.JiraRestClientService"/>
+        <projectService serviceImplementation="ru.hh.android.plugin.services.git.GitService"/>
+        <!-- endregion -->
+
+        <!-- region Inspections -->
+        <globalInspection
+                groupName="Inspections hh.ru "
+                shortName="AndroidLintWrongViewIdCodeStyleFormatting"
+                hasStaticDescription="true"
+                displayName="Wrong View's id"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="ru.hh.android.plugin.inspections.wrong_view_id.WrongViewIdCodeStyleFormattingInspection"/>
+
+        <globalInspection
+                groupName="Inspections hh.ru "
+                shortName="AndroidLintHardcodedDimensUsing"
+                hasStaticDescription="true"
+                displayName="Hardcoded dimens using"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="ru.hh.android.plugin.inspections.hardcoded_dimen.HardcodedDimensUsingInspection"/>
+
+        <globalInspection
+                groupName="Inspections hh.ru "
+                shortName="AndroidLintPutSerializableIssue"
+                hasStaticDescription="true"
+                displayName="Wrong putSerializable using"
+                enabledByDefault="true"
+                level="ERROR"
+                implementationClass="ru.hh.android.plugin.inspections.PutSerializableInspection"/>
+        <!-- endregion -->
+
+        <!-- region Annotators -->
+        <annotator
+                language="XML"
+                implementationClass="ru.hh.android.plugin.annotators.DeprecatedAndroidResourceAnnotator"/>
+        <!-- endregion -->
+
+        <!-- region Code completion contributors -->
+        <completion.contributor
+                id="deprecatedAttribute"
+                language="XML"
+                order="first"
+                implementationClass="ru.hh.android.plugin.completions.XmlDeprecatedCompletionContributor"/>
+        <!-- endregion -->
+    </extensions>
+
+</idea-plugin>
