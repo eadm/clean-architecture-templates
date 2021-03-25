@@ -23,10 +23,6 @@ optionalParams:
     - menu_entry
   minApi: 7
   minBuildApi: 8
-  
-# required only for modules templates
-predefinedFeatures:
-  - enableModuleCreationParams
 
 widgets:
   - stringParameter:
@@ -142,7 +138,6 @@ recipe:
 
 - [requiredParams](/plugins/hh-geminio/docs/ru/recipe_content/REQURED_PARAMS.md)
 - [optionalParams](/plugins/hh-geminio/docs/ru/recipe_content/OPTIONAL_PARAMS.md)
-- [predefinedFeatures](/plugins/hh-geminio/docs/ru/recipe_content/PREDEFINED_FEATURES.md)
 - [widgets](/plugins/hh-geminio/docs/ru/recipe_content/WIDGETS.md)
 - [globals](/plugins/hh-geminio/docs/ru/recipe_content/GLOBALS.md)
 - [recipe](/plugins/hh-geminio/docs/ru/recipe_content/RECIPE.md)

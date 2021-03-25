@@ -1,18 +1,27 @@
 package ru.hh.plugins.geminio.actions.template
 
 import com.android.tools.idea.model.AndroidModel
+import com.android.tools.idea.npw.project.getModuleTemplates
+import com.android.tools.idea.npw.project.getPackageForApplication
+import com.android.tools.idea.npw.project.getPackageForPath
 import com.android.tools.idea.ui.wizard.StudioWizardDialogBuilder
 import com.android.tools.idea.wizard.model.ModelWizard
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.LangDataKeys
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.vfs.VirtualFile
+import com.jetbrains.rd.util.catch
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.kotlin.idea.core.util.toPsiFile
+import org.jetbrains.kotlin.idea.core.util.toVirtualFile
 import org.jetbrains.kotlin.idea.util.application.executeWriteCommand
+import org.jetbrains.kotlin.idea.util.sourceRoots
 import org.jetbrains.kotlin.psi.KtFile
+import ru.hh.plugins.extensions.packageToPsiDirectory
 import ru.hh.plugins.extensions.psi.kotlin.shortReferencesAndReformatWithCodeStyle
 import ru.hh.plugins.geminio.sdk.GeminioSdkFactory
 import ru.hh.plugins.geminio.services.balloonError
@@ -69,48 +78,66 @@ class ExecuteGeminioTemplateAction(
         val (project, facet) = e.fetchEventData()
 
         val targetDirectory = e.getTargetDirectory()
+        val targetDirPackage = facet.getPackageForPath(facet.getModuleTemplates(targetDirectory), targetDirectory)
+        val appPackage = facet.getPackageForApplication() ?: "com.workingeeks."
 
-        val stepFactory = ConfigureTemplateParametersStepFactory.getInstance(project)
-        val stepModel = stepFactory.createFromAndroidFacet(
-            commandName = COMMAND_NAME,
-            stepTitle = actionText,
-            facet = facet,
-            targetDirectory = targetDirectory,
-            androidStudioTemplate = geminioSdk.createGeminioTemplateData(project, geminioRecipe).androidStudioTemplate
-        )
+        fun runWizard() {
+            val stepFactory = ConfigureTemplateParametersStepFactory.getInstance(project)
+            val stepModel = stepFactory.createFromAndroidFacet(
+                commandName = COMMAND_NAME,
+                stepTitle = actionText,
+                facet = facet,
+                targetDirectory = targetDirectory,
+                androidStudioTemplate = geminioSdk.createGeminioTemplateData(project, appPackage, geminioRecipe).androidStudioTemplate
+            )
 
-        val wizard = ModelWizard.Builder().addStep(stepModel.configureTemplateParametersStep).build().apply {
-            this.addResultListener(object : ModelWizard.WizardListener {
-                override fun onWizardFinished(result: ModelWizard.WizardResult) {
-                    super.onWizardFinished(result)
+            val wizard = ModelWizard.Builder().addStep(stepModel.configureTemplateParametersStep).build().apply {
+                this.addResultListener(object : ModelWizard.WizardListener {
+                    override fun onWizardFinished(result: ModelWizard.WizardResult) {
+                        super.onWizardFinished(result)
 
-                    if (result.isFinished.not()) {
-                        return
+                        if (!result.isFinished) {
+                            return
+                        }
+
+                        applyShortenReferencesAndCodeStyle()
+
+                        project.balloonInfo(message = "Finished '$actionText' template execution")
                     }
 
-                    applyShortenReferencesAndCodeStyle()
 
-                    project.balloonInfo(message = "Finished '$actionText' template execution")
-                }
-
-
-                private fun applyShortenReferencesAndCodeStyle() {
-                    measureTimeMillis {
-                        project.executeWriteCommand(COMMAND_AFTER_WIZARD_NAME) {
-                            stepModel.renderTemplateModel.createdFiles.forEach { file ->
-                                val psiFile = file.toPsiFile(project) as? KtFile
-                                psiFile?.shortReferencesAndReformatWithCodeStyle()
+                    private fun applyShortenReferencesAndCodeStyle() {
+                        measureTimeMillis {
+                            project.executeWriteCommand(COMMAND_AFTER_WIZARD_NAME) {
+                                stepModel.renderTemplateModel.createdFiles.forEach { file ->
+                                    val psiFile = file.toPsiFile(project) as? KtFile
+                                    psiFile?.shortReferencesAndReformatWithCodeStyle()
+                                }
                             }
-                        }
-                    }.also { println("Shorten references time: $it ms") }
-                }
-            })
+                        }.also { println("Shorten references time: $it ms") }
+                    }
+                })
+            }
+
+            val dialog = StudioWizardDialogBuilder(wizard, WIZARD_TITLE)
+                .setProject(project)
+                .build()
+            dialog.show()
         }
 
-        val dialog = StudioWizardDialogBuilder(wizard, WIZARD_TITLE)
-            .setProject(project)
-            .build()
-        dialog.show()
+        if (appPackage == targetDirPackage) {
+            runWizard()
+        } else {
+            JBPopupFactory.getInstance()
+                .createConfirmation(
+                    "Output Folder is DIFFERENT from application package",
+                    "Create anyway",
+                    "Cancel",
+                    ::runWizard,
+                    1
+                )
+                .showInBestPositionFor(e.dataContext)
+        }
     }
 
 

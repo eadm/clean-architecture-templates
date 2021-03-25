@@ -20,14 +20,14 @@ internal class GeminioSdkImpl : GeminioSdk {
         println("Recipe file exists -> need to parse, execute, etc")
 
         return recipeFilePath.parseGeminioRecipeFromYamlFile().also { recipe ->
-            println("geminio recipe to String:\n $recipe")
-            println("==========")
-            println("geminio recipe:\n ${recipe.toIndentString()}")
+//            println("geminio recipe to String:\n $recipe")
+//            println("==========")
+//            println("geminio recipe:\n ${recipe.toIndentString()}")
         }
     }
 
-    override fun createGeminioTemplateData(project: Project, geminioRecipe: GeminioRecipe): GeminioTemplateData {
-        return geminioRecipe.toGeminioTemplateData(project)
+    override fun createGeminioTemplateData(project: Project, suggestedAppPackage: String, geminioRecipe: GeminioRecipe): GeminioTemplateData {
+        return geminioRecipe.toGeminioTemplateData(project, suggestedAppPackage)
     }
 
 }

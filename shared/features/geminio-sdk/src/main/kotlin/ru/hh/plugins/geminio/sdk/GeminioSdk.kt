@@ -12,6 +12,6 @@ interface GeminioSdk {
 
     fun parseYamlRecipe(recipeFilePath: String): GeminioRecipe
 
-    fun createGeminioTemplateData(project: Project, geminioRecipe: GeminioRecipe): GeminioTemplateData
+    fun createGeminioTemplateData(project: Project, suggestedAppPackage: String, geminioRecipe: GeminioRecipe): GeminioTemplateData
 
 }

@@ -13,6 +13,7 @@ import ru.hh.plugins.geminio.sdk.GeminioSdkConstants.GLOBALS_SHOW_HIDDEN_VALUES_
 import ru.hh.plugins.geminio.sdk.recipe.models.GeminioRecipe
 import ru.hh.plugins.geminio.sdk.recipe.models.predefined.PredefinedFeature
 import ru.hh.plugins.geminio.sdk.recipe.models.predefined.PredefinedFeaturesSection
+import ru.hh.plugins.geminio.sdk.recipe.models.widgets.RecipeParameter
 import ru.hh.plugins.geminio.sdk.template.aliases.AndroidStudioTemplateBuilder
 import ru.hh.plugins.geminio.sdk.template.aliases.AndroidStudioTemplateParameter
 import ru.hh.plugins.geminio.sdk.template.aliases.AndroidStudioTemplateStringParameter
@@ -32,9 +33,10 @@ import ru.hh.plugins.geminio.sdk.template.models.GeminioTemplateParameterData
  * into [ru.hh.plugins.geminio.sdk.template.aliases.AndroidStudioTemplateBuilder].
  */
 internal fun AndroidStudioTemplateBuilder.injectWidgets(
+    suggestedAppPackage: String,
     recipe: GeminioRecipe
 ): Map<String, AndroidStudioTemplateParameter> {
-    val parametersData = recipe.toParametersData()
+    val parametersData = recipe.toParametersData(suggestedAppPackage)
 
     val allWidgets = parametersData.templateParameters.mapNotNull { parameterData ->
         when (parameterData.parameter) {
@@ -50,8 +52,21 @@ internal fun AndroidStudioTemplateBuilder.injectWidgets(
 }
 
 
-private fun GeminioRecipe.toParametersData(): GeminioRecipeParametersData {
+private fun GeminioRecipe.toParametersData(suggestedAppPackageValue: String): GeminioRecipeParametersData {
+    val suggestedAppPackageId = "suggestedAppPackage"
+    val suggestedAppPackage = RecipeParameter.StringParameter(
+        suggestedAppPackageId,
+        suggestedAppPackageId,
+        "",
+        null,
+        null,
+        suggestedAppPackageValue,
+        null,
+        emptyList()
+    ).toGeminioTemplateParameterData(emptyMap())
+
     val existingParametersMap = mutableMapOf<String, AndroidStudioTemplateParameter>()
+    existingParametersMap[suggestedAppPackage.parameterId] = suggestedAppPackage.parameter
 
     val allParameters = mutableListOf<GeminioTemplateParameterData>()
 

@@ -22,7 +22,7 @@ import ru.hh.plugins.geminio.sdk.template.models.GeminioRecipeExecutorData
  * Mapping from [ru.hh.plugins.geminio.sdk.recipe.models.GeminioRecipe]
  * into [ru.hh.plugins.geminio.sdk.models.GeminioTemplateData].
  */
-internal fun GeminioRecipe.toGeminioTemplateData(project: Project): GeminioTemplateData {
+internal fun GeminioRecipe.toGeminioTemplateData(project: Project, suggestedAppPackage: String): GeminioTemplateData {
     val geminioRecipe = this
 
     val existingParametersMap = mutableMapOf<String, AndroidStudioTemplateParameter>()
@@ -30,8 +30,7 @@ internal fun GeminioRecipe.toGeminioTemplateData(project: Project): GeminioTempl
     val androidStudioTemplate = template {
         injectRequiredParams(geminioRecipe)
         injectOptionalParams(geminioRecipe)
-
-        existingParametersMap += injectWidgets(geminioRecipe)
+        existingParametersMap += injectWidgets(suggestedAppPackage, geminioRecipe)
 
         var isDryRun = true
         recipe = { templateData ->
@@ -88,7 +87,7 @@ private fun getHardcodedParamsMap(
     }
 
     return mapOf(
-        HardcodedParams.PACKAGE_NAME to packageName,
+//        HardcodedParams.PACKAGE_NAME to packageName,
         HardcodedParams.APPLICATION_PACKAGE to applicationPackage,
     )
 }
