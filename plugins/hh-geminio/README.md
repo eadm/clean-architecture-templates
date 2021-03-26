@@ -27,9 +27,9 @@
 Установка и использование:
 
 1. Соберите плагин с помощью graddle task: hh-geminio/intellij/buildPlugin
-- Для сборки плагина НЕОБХОДИМО иметь Android Studio версии РОВНО 4.2 (не больше и не меньше)
-- Укажите путь к Android Studio 4.2 в классе buildSrc/src/main/kotlin/Versions.kt/Product.Local.ideVersion
-2. Установите скомпилированный hh-geminio.zip в Android Studio 4.2+ (плагин тестировался только на 4.2)
+- Для сборки плагина НЕОБХОДИМО иметь Android Studio версии РОВНО 4.1 (не больше и не меньше)
+- Укажите путь к Android Studio 4.1 в классе buildSrc/src/main/kotlin/Versions.kt/Product.Local.ideVersion
+2. Установите скомпилированный hh-geminio.zip в Android Studio 4.1+ (плагин тестировался только на 4.1)
 с помощью File - Settings... - Plugins - Install plugin from disk...
 3. После установки плагина в Settings - Appearance & Behavior появится вкладка Geminio plugin
 4. Во вкладке укажите путь к конфигурационному файлу (шаблоны и конфигурационный файл к плагину не прилагаются,
